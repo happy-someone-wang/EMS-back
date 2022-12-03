@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        #namespace: 123 #来自nacos注册中心
+      config:
+        enabled: false

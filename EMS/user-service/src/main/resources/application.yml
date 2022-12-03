@@ -1,0 +1,22 @@
+#微服务部署时本地端口
+server:
+  port: 9000
+spring:
+  #数据库参数
+  datasource:
+    url: jdbc:mysql://123.60.156.14:3306/db_etms2?useSSL=false
+    username: root
+    password: 123abc
+    driver-class-name: com.mysql.jdbc.Driver
+  #服务名称
+  application:
+    name: userservice
+mybatis:
+  type-aliases-package: cn.itcast.user.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    cn.itcast: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
