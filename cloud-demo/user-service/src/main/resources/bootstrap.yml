@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 101.42.159.213:8848
-        namespace: 1ba4cf23-94a3-4cc1-ad68-f0e2dd10e03c #来自nacos注册中心
-      config:
-        enabled: false
