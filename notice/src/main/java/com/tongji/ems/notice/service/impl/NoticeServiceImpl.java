@@ -8,6 +8,7 @@ import com.tongji.ems.notice.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,13 @@ public class NoticeServiceImpl implements NoticeService {
             result.put("status", "查询无果");
             result.put("noticeNum", 0);
         } else {
-            Map<String, Object> notices = new HashMap<>();
+            List<Map<String, Object>> notices = new ArrayList<>();
             for (Notice notice : noticeList) {
+                Map<String, Object> item = new HashMap<>();
                 Map<String, Object> teacher = personalInfoClient.getPersonalInfo(notice.getTeacherId(), "teacher");
-                notices.put("notice", notice);
-                notices.put("teacher", teacher);
+                item.put("notice", notice);
+                item.put("teacher", teacher);
+                notices.add(item);
             }
             result.put("status", "查询成功");
             result.put("notices", notices);
