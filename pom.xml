@@ -9,6 +9,9 @@
         <module>Eureka</module>
         <module>feign-api</module>
         <module>Gateway</module>
+        <module>coursemanage</module>
+        <module>experimentmanage</module>
+        <module>login</module>
         <module>EmailTest</module>
         <module>admin</module>
     </modules>

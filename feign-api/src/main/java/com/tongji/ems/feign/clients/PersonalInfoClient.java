@@ -16,5 +16,5 @@ public interface PersonalInfoClient {
      * @return 用户个人信息
      */
     @GetMapping("/person")
-    Map<String, Object> getPersonalInfo(@RequestParam("id") Integer id, @RequestParam("role") String role);
+    Map<String, Object> getPersonalInfo(@RequestParam("id") Long id, @RequestParam("role") String role);
 }
