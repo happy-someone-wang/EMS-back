@@ -10,6 +10,7 @@
         <module>Eureka</module>
         <module>feign-api</module>
         <module>Gateway</module>
+        <module>coursemanage</module>
     </modules>
 
     <parent>
