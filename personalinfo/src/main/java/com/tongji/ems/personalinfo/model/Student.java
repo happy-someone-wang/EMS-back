@@ -17,11 +17,17 @@ public class Student {
     private String startYear;
     // 头像
     private String avatar;
+    // 个人简介
+    private String selfDesc;
+    // 居住地
+    private String residence;
+    // 个人标签
+    private String tags;
 
     public Student() {
     }
 
-    public Student(Integer studentId, String name, String gender, String email, String phone, String school, String startYear, String avatar) {
+    public Student(Integer studentId, String name, String gender, String email, String phone, String school, String startYear, String avatar, String selfDesc, String residence, String tags) {
         this.studentId = studentId;
         this.name = name;
         this.gender = gender;
@@ -30,6 +36,33 @@ public class Student {
         this.school = school;
         this.startYear = startYear;
         this.avatar = avatar;
+        this.selfDesc = selfDesc;
+        this.residence = residence;
+        this.tags = tags;
+    }
+
+    public String getSelfDesc() {
+        return selfDesc;
+    }
+
+    public void setSelfDesc(String selfDesc) {
+        this.selfDesc = selfDesc;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public Integer getStudentId() {

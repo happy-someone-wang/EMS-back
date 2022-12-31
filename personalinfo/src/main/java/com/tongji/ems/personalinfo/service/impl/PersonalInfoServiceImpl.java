@@ -39,6 +39,9 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
                 result.put("avatar", student.getAvatar());
                 result.put("school", student.getSchool());
                 result.put("startYear", student.getStartYear());
+                result.put("selfDesc", student.getSelfDesc());
+                result.put("residence", student.getResidence());
+                result.put("tags", student.getTags());
             }
             return result;
         } else if (role.equals("teacher")) {
@@ -51,6 +54,9 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
                 result.put("name", teacher.getName());
                 result.put("email", teacher.getEmail());
                 result.put("gender", teacher.getGender());
+                result.put("avatar", teacher.getAvatar());
+                result.put("selfDesc", teacher.getSelfDesc());
+                result.put("tags", teacher.getTags());
             }
             return result;
         } else {

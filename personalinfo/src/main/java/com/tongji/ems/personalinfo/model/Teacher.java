@@ -11,16 +11,46 @@ public class Teacher {
     private String gender;
     private String email;
     private String phone;
+    private String avatar;
+    private String selfDesc;
+    private String tags;
 
     public Teacher() {
     }
 
-    public Teacher(Integer teacherId, String name, String gender, String email, String phone) {
+    public Teacher(Integer teacherId, String name, String gender, String email, String phone, String avatar, String selfDesc, String tags) {
         this.teacherId = teacherId;
         this.name = name;
         this.gender = gender;
         this.email = email;
         this.phone = phone;
+        this.avatar = avatar;
+        this.selfDesc = selfDesc;
+        this.tags = tags;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSelfDesc() {
+        return selfDesc;
+    }
+
+    public void setSelfDesc(String selfDesc) {
+        this.selfDesc = selfDesc;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public Integer getTeacherId() {

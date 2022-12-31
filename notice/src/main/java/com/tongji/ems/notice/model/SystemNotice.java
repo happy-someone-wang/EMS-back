@@ -5,50 +5,38 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-@TableName("notice")
-public class Notice {
-    @TableId(value = "notice_id")
-    private Integer noticeId;
-    private Integer teacherId;
-    private Integer courseId;
+/**
+ * 系统通知
+ *
+ * @author 赵帅涛
+ * @since 2022年12月31日
+ */
+@TableName("system_notice")
+public class SystemNotice {
+    @TableId("notice_id")
+    private Long noticeId;
     private String title;
     private String content;
     private Date createTime;
+    private Boolean top;
 
-    public Notice() {
+    public SystemNotice() {
     }
 
-    public Notice(Integer noticeId, Integer teacherId, Integer courseId, String title, String content, Date createTime) {
+    public SystemNotice(Long noticeId, String title, String content, Date createTime, Boolean top) {
         this.noticeId = noticeId;
-        this.teacherId = teacherId;
-        this.courseId = courseId;
         this.title = title;
         this.content = content;
         this.createTime = createTime;
+        this.top = top;
     }
 
-    public Integer getNoticeId() {
+    public Long getNoticeId() {
         return noticeId;
     }
 
-    public void setNoticeId(Integer noticeId) {
+    public void setNoticeId(Long noticeId) {
         this.noticeId = noticeId;
-    }
-
-    public Integer getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Integer teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
     }
 
     public String getTitle() {
@@ -73,5 +61,13 @@ public class Notice {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Boolean getTop() {
+        return top;
+    }
+
+    public void setTop(Boolean top) {
+        this.top = top;
     }
 }
