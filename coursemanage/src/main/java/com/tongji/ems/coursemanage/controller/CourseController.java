@@ -52,7 +52,7 @@ public class CourseController {
 //    }
 
     @GetMapping("/getStudentCourseList")
-    public ResponseEntity<List<Map<String, Object>>> getStudentCoursePage(
+    public ResponseEntity<List<Map<String, Object>>> getStudentCourseList(
             @RequestParam(value  = "studentId") Long studentId
     ) {
         try {

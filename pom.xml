@@ -11,6 +11,7 @@
         <module>feign-api</module>
         <module>Gateway</module>
         <module>coursemanage</module>
+        <module>experimentmanage</module>
     </modules>
 
     <parent>

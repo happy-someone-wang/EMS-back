@@ -36,7 +36,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Long> getOneCourseAllTeachers(Long courseId) {
-        Map<String, Object> result = new HashMap<>();
         return courseMapper.selectOneCourseAllTeacher(courseId);
     }
 
