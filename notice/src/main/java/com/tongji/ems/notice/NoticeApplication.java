@@ -1,4 +1,4 @@
-package com.tongji.ems.admin;
+package com.tongji.ems.notice;
 
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.boot.SpringApplication;

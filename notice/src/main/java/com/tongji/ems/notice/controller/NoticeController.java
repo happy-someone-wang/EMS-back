@@ -1,11 +1,7 @@
-package com.tongji.ems.admin.controller;
+package com.tongji.ems.notice.controller;
 
-<<<<<<< HEAD:notice/src/main/java/com/tongji/ems/notice/controller/NoticeController.java
 import com.tongji.ems.notice.model.CourseNotice;
 import com.tongji.ems.notice.service.NoticeService;
-=======
-import com.tongji.ems.admin.service.NoticeService;
->>>>>>> 0e4382000f8cef9bebd113ac9f312d50f8e280cf:notice/src/main/java/com/tongji/ems/admin/controller/NoticeController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

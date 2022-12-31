@@ -1,17 +1,11 @@
-package com.tongji.ems.admin.service.impl;
+package com.tongji.ems.notice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
-<<<<<<< HEAD:notice/src/main/java/com/tongji/ems/notice/service/impl/NoticeServiceImpl.java
 import com.tongji.ems.notice.mapper.NoticeMapper;
 import com.tongji.ems.notice.model.CourseNotice;
 import com.tongji.ems.notice.service.NoticeService;
 import com.tongji.ems.notice.util.GenerateIdTenth;
-=======
-import com.tongji.ems.admin.mapper.NoticeMapper;
-import com.tongji.ems.admin.model.Notice;
-import com.tongji.ems.admin.service.NoticeService;
->>>>>>> 0e4382000f8cef9bebd113ac9f312d50f8e280cf:notice/src/main/java/com/tongji/ems/admin/service/impl/NoticeServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

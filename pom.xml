@@ -12,7 +12,6 @@
         <module>coursemanage</module>
         <module>experimentmanage</module>
         <module>login</module>
-        <module>EmailTest</module>
         <module>admin</module>
     </modules>
 
