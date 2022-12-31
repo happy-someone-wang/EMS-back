@@ -1,10 +1,10 @@
-package com.tongji.ems.notice.service.impl;
+package com.tongji.ems.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
-import com.tongji.ems.notice.mapper.NoticeMapper;
-import com.tongji.ems.notice.model.Notice;
-import com.tongji.ems.notice.service.NoticeService;
+import com.tongji.ems.admin.mapper.NoticeMapper;
+import com.tongji.ems.admin.model.Notice;
+import com.tongji.ems.admin.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

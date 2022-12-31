@@ -1,7 +1,7 @@
-package com.tongji.ems.notice.mapper;
+package com.tongji.ems.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tongji.ems.notice.model.Notice;
+import com.tongji.ems.admin.model.Notice;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

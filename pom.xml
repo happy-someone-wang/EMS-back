@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>notice</module>
         <module>personalInfo</module>
         <module>Eureka</module>
         <module>feign-api</module>
         <module>Gateway</module>
         <module>EmailTest</module>
+        <module>admin</module>
     </modules>
 
     <parent>

@@ -1,4 +1,4 @@
-package com.tongji.ems.notice.model;
+package com.tongji.ems.admin.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

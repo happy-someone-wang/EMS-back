@@ -1,4 +1,4 @@
-package com.tongji.ems.notice.service;
+package com.tongji.ems.admin.service;
 
 import java.util.Map;
 
