@@ -1,0 +1,36 @@
+server:
+  port: 8086
+
+spring:
+  datasource:
+    druid:
+      connect-timeout: 100
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: Abcd_1234
+      url: jdbc:mysql://101.42.17.125:3306/db_User?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+  application:
+    name: EmailTest
+  mail:
+    host: smtp.qq.com #邮箱服务器地址
+    port: 465
+    username: 1759469055@qq.com
+    pass: yjykjeqapqojbegc
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable:
+              true;
+    protocol: smtp
+    test-connection: false
+
+
+logging:
+  level:
+    root: debug
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8080/eureka

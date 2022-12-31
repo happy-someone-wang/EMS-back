@@ -1,6 +1,6 @@
-package com.tongji.ems.notice.controller;
+package com.tongji.ems.admin.controller;
 
-import com.tongji.ems.notice.service.NoticeService;
+import com.tongji.ems.admin.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
