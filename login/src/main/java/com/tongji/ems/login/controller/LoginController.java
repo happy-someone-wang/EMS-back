@@ -3,6 +3,7 @@ package com.tongji.ems.login.controller;
 import com.tongji.ems.login.model.Student;
 import com.tongji.ems.login.model.Teacher;
 import com.tongji.ems.login.service.LoginService;
+import com.tongji.ems.login.tools.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import javax.ws.rs.PUT;
+import java.util.*;
 
 /**
  * @Author 2051196 刘一飞
@@ -27,31 +26,35 @@ public class LoginController {
     LoginService loginService;
 
     @GetMapping("/userLogin")
-    public ResponseEntity<String> getExperimentList(
+    public ResponseEntity<Map<String, Object>> getExperimentList(
             @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "role") String role
     ) {
         try {
+            Map<String, Object> result = new HashMap<>();
             if (Objects.equals(role, "student")) {
                 Student student = loginService.getStudentById(userId);
                 if (student == null) {
-                    return ResponseEntity.status(400).body("账号错误");
+                    result.put("status","id error");
                 } else if (!Objects.equals(student.getPassword(), password)) {
-                    return ResponseEntity.status(400).body("密码错误");
+                    result.put("status","password error");
                 } else {
-                    return ResponseEntity.ok("登录成功");
+                    result.put("status","success");
+                    result.put("token", JwtUtil.sign(String.valueOf(userId)));
                 }
-
+                return ResponseEntity.ok(result);
             } else {
                 Teacher teacher = loginService.getTeacherById(userId);
                 if (teacher == null) {
-                    return ResponseEntity.status(400).body("账号错误");
+                    result.put("status","id error");
                 } else if (!Objects.equals(teacher.getPassword(), password)) {
-                    return ResponseEntity.status(400).body("密码错误");
+                    result.put("status","password error");
                 } else {
-                    return ResponseEntity.ok("登录成功");
+                    result.put("status","success");
+                    result.put("token", JwtUtil.sign(String.valueOf(userId)));
                 }
+                return ResponseEntity.ok(result);
             }
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null);

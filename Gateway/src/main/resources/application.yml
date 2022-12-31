@@ -14,6 +14,18 @@ spring:
           uri: lb://notice
           predicates:
             - Path=/notice/**
+        - id: experiment
+          uri: lb://experiment
+          predicates:
+            - Path=/experiment/**
+        - id: course
+          uri: lb://course
+          predicates:
+            - Path=/course/**
+        - id: login
+          uri: lb://login
+          predicates:
+            - Path=/login/**
   main:
     web-application-type: reactive
 
