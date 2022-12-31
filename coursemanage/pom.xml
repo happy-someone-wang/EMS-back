@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>assistant</artifactId>
+    <artifactId>course</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -43,7 +43,6 @@
             <groupId>com.tongji</groupId>
             <artifactId>feign-api</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

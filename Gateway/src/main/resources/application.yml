@@ -5,6 +5,7 @@ spring:
     name: gateway
   cloud:
     gateway:
+
       routes:
         - id: personalInfo
           uri: lb://personalInfo
@@ -14,6 +15,22 @@ spring:
           uri: lb://notice
           predicates:
             - Path=/notice/**
+        - id: experiment
+          uri: lb://experiment
+          predicates:
+            - Path=/experiment/**
+        - id: course
+          uri: lb://course
+          predicates:
+            - Path=/course/**
+        - id: login
+          uri: lb://login
+          predicates:
+            - Path=/login/**
+        - id: admin
+          uri: lb://admin
+          predicates:
+            - Path=/admin/**
   main:
     web-application-type: reactive
 
