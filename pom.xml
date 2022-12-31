@@ -12,6 +12,7 @@
         <module>Gateway</module>
         <module>coursemanage</module>
         <module>experimentmanage</module>
+        <module>login</module>
     </modules>
 
     <parent>

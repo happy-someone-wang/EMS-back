@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8085
 
 spring:
   datasource:
@@ -8,9 +8,9 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: 123abc
-      url: jdbc:mysql://123.60.156.14:3306/db_experiment_lyf?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+      url: jdbc:mysql://123.60.156.14:3306/db_person?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
   application:
-    name: experiment
+    name: login
 
 
 logging:
