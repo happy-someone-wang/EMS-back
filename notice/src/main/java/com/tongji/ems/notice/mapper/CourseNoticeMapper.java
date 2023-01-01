@@ -5,5 +5,5 @@ import com.tongji.ems.notice.model.CourseNotice;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface NoticeMapper extends BaseMapper<CourseNotice> {
+public interface CourseNoticeMapper extends BaseMapper<CourseNotice> {
 }
