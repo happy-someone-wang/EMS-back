@@ -5,13 +5,13 @@ import com.tongji.ems.login.model.Student;
 import com.tongji.ems.login.model.Teacher;
 import com.tongji.ems.login.service.LoginService;
 import com.tongji.ems.login.tools.JwtUtil;
+import com.tongji.ems.login.tools.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.objenesis.ObjenesisException;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.PUT;
 import java.util.*;
 
 /**
@@ -31,6 +31,7 @@ public class LoginController {
 
     @Autowired
     PersonalInfoClient personalInfoClient;
+
 
     @GetMapping("/userLogin")
     public ResponseEntity<Map<String, Object>> userLogin(
@@ -63,11 +64,10 @@ public class LoginController {
                 }
                 return ResponseEntity.ok(result);
             } else {
-                if (userId == 1){
+                if (userId == 1) {
                     result.put("status", "success");
                     result.put("token", JwtUtil.sign(String.valueOf(userId), role));
-                }
-                else{
+                } else {
                     result.put("status", "error");
                 }
                 return ResponseEntity.ok(result);
@@ -91,7 +91,7 @@ public class LoginController {
             String role = JwtUtil.getRole(token);
 
             // 管理员 直接返回
-            if(Objects.equals(role, "admin")){
+            if (Objects.equals(role, "admin")) {
                 Map<String, Object> result = new HashMap<>();
                 result.put("role", role);
                 result.put("userId", userid);
@@ -106,5 +106,21 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/activateAccount")
+    public ResponseEntity<String> activateAccount(
+            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "role") String role,
+            @RequestParam(value = "email") String email
+    ) {
+        try {
+            MailSender.sendEmail(email, userId, password, role);
+            return ResponseEntity.ok("success");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(400).body(null);
+        }
+
+    }
 
 }
