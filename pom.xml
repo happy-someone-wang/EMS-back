@@ -13,6 +13,7 @@
         <module>experimentmanage</module>
         <module>login</module>
         <module>admin</module>
+        <module>notice</module>
     </modules>
 
     <parent>
