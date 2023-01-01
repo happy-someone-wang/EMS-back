@@ -26,13 +26,13 @@ public class JwtUtil {
      * @param userId
      * @return
      */
-    public static String sign(String userId) {
+    public static String sign(String userId, String role) {
         try {
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             return JWT.create()
                     //将userId保存到token里面
-                    .withAudience(userId)
+                    .withAudience(userId, role)
                     //三天后token过期
                     .withExpiresAt(date)
                     //token的密钥
@@ -53,6 +53,15 @@ public class JwtUtil {
         try {
             String userId = JWT.decode(token).getAudience().get(0);
             return userId;
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
+    public static String getRole(String token) {
+        try {
+            String role = JWT.decode(token).getAudience().get(1);
+            return role;
         } catch (JWTDecodeException e) {
             return null;
         }
