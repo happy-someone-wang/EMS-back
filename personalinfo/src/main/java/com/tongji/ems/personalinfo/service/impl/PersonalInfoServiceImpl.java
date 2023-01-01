@@ -1,5 +1,6 @@
 package com.tongji.ems.personalinfo.service.impl;
 
+import com.tongji.ems.feign.clients.FileStoreClient;
 import com.tongji.ems.personalinfo.mapper.StudentInfoMapper;
 import com.tongji.ems.personalinfo.mapper.TeacherInfoMapper;
 import com.tongji.ems.personalinfo.model.Student;
@@ -7,7 +8,9 @@ import com.tongji.ems.personalinfo.model.Teacher;
 import com.tongji.ems.personalinfo.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +22,9 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
 
     @Autowired
     private TeacherInfoMapper teacherInfoMapper;
+
+    @Autowired
+    private FileStoreClient fileStoreClient;
 
     @Override
     public Map<String, Object> getPersonalInfo(Integer id, String role) {
@@ -62,5 +68,158 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Map<String, Object> postPersonalInfo(Object person, String role) {
+        Map<String, Object> result = new HashMap<>();
+        if (role.equals("student")) {
+            Student student = (Student) person;
+            if (student == null) {
+                result.put("code", 400);
+                return result;
+            }
+            if (student.getStudentId() == null) {
+                result.put("code", 400);
+                return result;
+            }
+            Student temp = studentInfoMapper.selectById(student.getStudentId());
+            if (temp != null) {
+                result.put("code", 400);
+                result.put("desc", "该用户已存在");
+                return result;
+            }
+            studentInfoMapper.insert(student);
+            result.put("code", 200);
+            result.put("student", student);
+            return result;
+        } else if (role.equals("teacher")) {
+            Teacher teacher = (Teacher) person;
+            if (teacher == null || teacher.getTeacherId() == null) {
+                result.put("code", 400);
+                return result;
+            }
+            Teacher temp = teacherInfoMapper.selectById(teacher.getTeacherId());
+            if (temp != null) {
+                result.put("code", 400);
+                result.put("desc", "该用户已存在");
+                return result;
+            }
+            teacherInfoMapper.insert(teacher);
+            result.put("code", 200);
+            result.put("teacher", teacher);
+            return result;
+        } else {
+            result.put("code", 400);
+            return result;
+        }
+    }
+
+    @Override
+    public Map<String, Object> updatePersonalInfo(Object person, String role) {
+        Map<String, Object> result = new HashMap<>();
+        if (role.equals("student")) {
+            Student student = (Student) person;
+            if (student == null || student.getStudentId() == null) {
+                result.put("code", 400);
+                return result;
+            }
+            Student temp = studentInfoMapper.selectById(student.getStudentId());
+            if (temp == null) {
+                result.put("code", 400);
+                return result;
+            }
+            if (student.getEmail() != null) {
+                temp.setEmail(student.getEmail());
+            }
+            if (student.getPhone() != null) {
+                temp.setPhone(student.getPhone());
+            }
+            if (student.getSelfDesc() != null) {
+                temp.setSelfDesc(student.getSelfDesc());
+            }
+            if (student.getResidence() != null) {
+                temp.setResidence(student.getResidence());
+            }
+            if (student.getTags() != null) {
+                temp.setTags(student.getTags());
+            }
+            studentInfoMapper.updateById(temp);
+            result.put("student", temp);
+            result.put("code", 200);
+            return result;
+        } else if (role.equals("teacher")) {
+            Teacher teacher = (Teacher) person;
+            if (teacher == null || teacher.getTeacherId() == null) {
+                result.put("code", 400);
+                return result;
+            }
+            Teacher temp = teacherInfoMapper.selectById(teacher.getTeacherId());
+            if (temp == null) {
+                result.put("code", 400);
+                return result;
+            }
+            if (teacher.getEmail() != null) {
+                temp.setEmail(temp.getEmail());
+            }
+            if (teacher.getPhone() != null) {
+                temp.setPhone(teacher.getPhone());
+            }
+            if (teacher.getSelfDesc() != null) {
+                temp.setSelfDesc(teacher.getSelfDesc());
+            }
+            if (teacher.getTags() != null) {
+                temp.setTags(teacher.getTags());
+            }
+            result.put("code", 200);
+            result.put("teacher", temp);
+            teacherInfoMapper.updateById(temp);
+            return result;
+        } else {
+            result.put("code", 400);
+            return result;
+        }
+    }
+
+    @Override
+    public Boolean deletePersonalInfo(Integer Id, String role) {
+        if (Id == null || Id <= 0) {
+            return false;
+        }
+        if (role.equals("student")) {
+            studentInfoMapper.deleteById(Id);
+            return true;
+        } else if (role.equals("teacher")) {
+            teacherInfoMapper.deleteById(Id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String changeAvatar(MultipartFile avatar, Integer Id, String role) {
+        String avatarUrl = fileStoreClient.uploadFile(avatar);
+        if (Id == null || Id <= 0) {
+            return null;
+        }
+        if (role.equals("teacher")) {
+            Teacher teacher = teacherInfoMapper.selectById(Id);
+            if (teacher != null) {
+                teacher.setAvatar(avatarUrl);
+                teacherInfoMapper.updateById(teacher);
+                return avatarUrl;
+            }
+        } else if (role.equals("student")) {
+            Student student = studentInfoMapper.selectById(Id);
+            if (student != null) {
+                student.setAvatar(avatarUrl);
+                studentInfoMapper.updateById(student);
+                return avatarUrl;
+            }
+        } else {
+            return null;
+        }
+        return null;
     }
 }

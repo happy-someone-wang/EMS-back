@@ -1,13 +1,11 @@
-package com.tongji.ems.feign;
+package com.tongji.ems.grade;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FeignApplication {
-    public static final String a = "1234";
-
+public class GradeApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FeignApplication.class, args);
+        SpringApplication.run(GradeApplication.class, args);
     }
 }
