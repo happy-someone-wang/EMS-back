@@ -9,8 +9,8 @@ import java.util.Date;
 public class CourseSign {
     private Long signId;
     private Long courseId;
-    private Date start_time;
-    private Date end_time;
+    private Date startTime;
+    private Date endTime;
     private Long experimentId;
 
     public CourseSign() {
@@ -19,8 +19,8 @@ public class CourseSign {
     public CourseSign(Long signId, Long courseId, Date start_time, Date end_time, Long experimentId) {
         this.signId = signId;
         this.courseId = courseId;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.startTime = start_time;
+        this.endTime = end_time;
         this.experimentId = experimentId;
     }
 
@@ -40,20 +40,20 @@ public class CourseSign {
         this.courseId = courseId;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Long getExperimentId() {
