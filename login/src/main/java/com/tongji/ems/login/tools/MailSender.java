@@ -72,7 +72,7 @@ public class MailSender {
         // 邮件的文本内容
 
         Base64.Encoder encoder = Base64.getEncoder();
-        String str = userId + "/" + password + "/" + role + "/" + System.currentTimeMillis();
+        String str = userId + "/" + password + "/" + role + "/" + email + "/" + System.currentTimeMillis();
         String code = encoder.encodeToString(str.getBytes());
 
         message.setContent("尊敬的" + userId + "您好！\n" + "请点击下方链接验证您的邮箱:\n" + "        http://localhost:8081/login/verifyEmail?code=" + code, "text/html;charset=UTF-8");

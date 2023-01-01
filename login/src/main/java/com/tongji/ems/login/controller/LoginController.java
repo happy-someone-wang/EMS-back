@@ -115,13 +115,14 @@ public class LoginController {
     ) {
         try {
             Map<String, Object> personalInfo = personalInfoClient.getPersonalInfo(userId, role);
-            if (personalInfo == null) {
+            if (Objects.equals((String) personalInfo.get("status"), "查无此人")) {
                 return ResponseEntity.status(400).body("账号不存在");
             }
+            String a = (String) personalInfo.get("status");
             if (personalInfo.get("email") != null) {
                 return ResponseEntity.status(400).body("账号已经激活过，请使用账号密码登录");
             }
-            MailSender.sendEmail(email, String.valueOf(userId), password, role);
+//            MailSender.sendEmail(email, String.valueOf(userId), password, role);
             return ResponseEntity.ok("邮件发送成功");
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null);
@@ -136,15 +137,21 @@ public class LoginController {
         Base64.Decoder decoder = Base64.getDecoder();
         String str = new String(decoder.decode(code));
         String[] strings = str.split("/");
-        String userId = strings[0];
+        Long userId = Long.valueOf(strings[0]);
         String password = strings[1];
         String role = strings[2];
-        String time = strings[3];
+        String email = strings[3];
+        String time = strings[4];
         if (System.currentTimeMillis() - Long.parseLong(time) > 60 * 60 * 24) {
             return ResponseEntity.status(400).body("验证超时");
         }
+        if (Objects.equals(role, "student")) {
+            loginService.activateStudent(userId, password, email);
+        } else {
+            loginService.activateTeacher(userId, password, email);
+        }
 
-        return ResponseEntity.ok(userId + time + "?" + System.currentTimeMillis());
+        return ResponseEntity.ok("激活成功");
     }
 
 }
