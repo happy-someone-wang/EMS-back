@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Service
 public interface CourseService {
-    Map<String, Object> getCourseById(Long courseId);
+    Course getCourseById(Long courseId);
 
     List<Long> getOneCourseAllTeachers(Long courseId);
 

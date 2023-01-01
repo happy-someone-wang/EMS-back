@@ -27,11 +27,8 @@ public class CourseServiceImpl implements CourseService {
     PersonalInfoClient personalInfoClient;
 
     @Override
-    public Map<String, Object> getCourseById(Long courseId) {
-        Map<String, Object> result = new HashMap<>();
-        Course course = courseMapper.selectCourseById(courseId);
-        result.put("course",course);
-        return result;
+    public Course getCourseById(Long courseId) {
+        return courseMapper.selectCourseById(courseId);
     }
 
     @Override

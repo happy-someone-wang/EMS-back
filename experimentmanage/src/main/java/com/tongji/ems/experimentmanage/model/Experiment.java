@@ -22,17 +22,21 @@ public class Experiment {
     private Long courseId;
     private Date createTime;
     private Date deadline;
-
+    private String introduction;
     public Experiment() {
     }
-
-    public Experiment(Long experimentId, String name, Long courseId, Date createTime, Date deadline) {
+    public Experiment(Long experimentId, String name, Long courseId, Date createTime, Date deadline, String introduction) {
         this.experimentId = experimentId;
         this.name = name;
         this.courseId = courseId;
         this.createTime = createTime;
         this.deadline = deadline;
+        this.introduction = introduction;
     }
+
+    public Experiment(Long experimentId, String name, Date deadline_date, String introduction) {
+    }
+
 
     public Long getExperimentId() {
         return experimentId;
@@ -72,5 +76,13 @@ public class Experiment {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

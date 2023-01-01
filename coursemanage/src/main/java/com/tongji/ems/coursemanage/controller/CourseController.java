@@ -1,5 +1,6 @@
 package com.tongji.ems.coursemanage.controller;
 
+import com.tongji.ems.coursemanage.model.Course;
 import com.tongji.ems.coursemanage.service.CourseService;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +28,16 @@ public class CourseController {
     @Autowired
     PersonalInfoClient personalInfoClient;
 
-    @GetMapping("/getCourseById")
-    public ResponseEntity<Map<String, Object>> getCourseById(
-            @RequestParam(value = "courseId") Long courseId
-    ) {
-        try {
-            return ResponseEntity.ok(courseService.getCourseById(courseId));
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body(null);
-        }
-    }
+//    @GetMapping("/getCourseById")
+//    public ResponseEntity<Map<String, Object>> getCourseById(
+//            @RequestParam(value = "courseId") Long courseId
+//    ) {
+//        try {
+//            return ResponseEntity.ok(courseService.getCourseById(courseId));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(400).body(null);
+//        }
+//    }
 
 //    @GetMapping("/getOneCourseAllTeachers")
 //    public ResponseEntity<Map<String, Object>> getOneCourseAllTeachers(
@@ -50,24 +51,24 @@ public class CourseController {
 //    }
 
     @GetMapping("/getStudentCourseList")
-    public ResponseEntity<List<Map<String, Object>>> getStudentCourseList(
+    public ResponseEntity<List<Course>> getStudentCourseList(
             @RequestParam(value  = "studentId") Long studentId
     ) {
         try {
-            ArrayList<Map<String, Object>> courses = new ArrayList<>();
+            ArrayList<Course> courses = new ArrayList<>();
             List<Long> coursesIds = courseService.getOneStudentAllCourses(studentId);
             for (Long Id : coursesIds) {
-                Map<String, Object> courseInfo = courseService.getCourseById(Id);
+                Course courseInfo = courseService.getCourseById(Id);
 
                 // 获取当前课程所有授课老师信息
-                ArrayList<Map<String, Object>> teachers = new ArrayList<>();
+                ArrayList<String> teachers = new ArrayList<>();
                 List<Long> teacherIds = courseService.getOneCourseAllTeachers(Id);
                 for (Long teacherId : teacherIds) {
                     Map<String, Object> teacher = personalInfoClient.getPersonalInfo(teacherId, "teacher");
-                    teachers.add(teacher);
+                    teachers.add((String) teacher.get("name"));
                 }
                 // 将授课老师信息加入map中
-                courseInfo.put("teachers",teachers);
+                courseInfo.setTeacher(teachers);
 
                 courses.add(courseInfo);
             }
