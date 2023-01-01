@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.rmi.server.ExportException;
 import java.util.*;
 
 /**
@@ -118,11 +119,10 @@ public class LoginController {
             if (Objects.equals((String) personalInfo.get("status"), "查无此人")) {
                 return ResponseEntity.status(400).body("账号不存在");
             }
-            String a = (String) personalInfo.get("status");
             if (personalInfo.get("email") != null) {
                 return ResponseEntity.status(400).body("账号已经激活过，请使用账号密码登录");
             }
-//            MailSender.sendEmail(email, String.valueOf(userId), password, role);
+            MailSender.sendEmail(email, String.valueOf(userId), password, role, "verify");
             return ResponseEntity.ok("邮件发送成功");
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null);
@@ -154,4 +154,48 @@ public class LoginController {
         return ResponseEntity.ok("激活成功");
     }
 
+    @GetMapping("/sendForgetEmail")
+    public ResponseEntity<String> forgetEmail(
+            @RequestParam("userId") Long userId,
+            @RequestParam("role") String role
+    ) {
+        try {
+            Map<String, Object> personalInfo = personalInfoClient.getPersonalInfo(userId, role);
+            if (Objects.equals((String) personalInfo.get("status"), "查无此人")) {
+                return ResponseEntity.status(400).body("账号不存在");
+            }
+            if (personalInfo.get("email") == null) {
+                return ResponseEntity.status(400).body("当前账号未激活");
+            }
+            String email = (String) personalInfo.get("email");
+            String code = "";
+            for (int i = 0; i < 4; i++) {
+                code = code + String.valueOf((int) Math.floor(Math.random() * 9 + 1));
+            }
+            MailSender.sendEmail(email, String.valueOf(userId), code, "", "forget");
+            return ResponseEntity.ok(code);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+
+    }
+
+    @GetMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(
+            @RequestParam("userId") Long userId,
+            @RequestParam("role") String role,
+            @RequestParam("password") String password
+    ) {
+        try {
+            if (Objects.equals(role, "student")) {
+                loginService.modifyStudentPassword(userId, password);
+            } else {
+                loginService.modifyTeacherPassword(userId, password);
+            }
+            return ResponseEntity.ok("修改密码成功");
+        } catch (Exception e){
+            return ResponseEntity.status(400).body(null);
+        }
+
+    }
 }

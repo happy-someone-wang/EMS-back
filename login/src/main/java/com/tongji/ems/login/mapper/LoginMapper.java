@@ -27,4 +27,10 @@ public interface LoginMapper {
 
     @Update("UPDATE teacher SET password='${password}',email='${email}' WHERE teacher_id='${teacherId}'")
     int updateTeacher(@Param("teacherId") Long teacherId, @Param("password") String password, @Param("email") String email);
+
+    @Update("UPDATE student SET password='${password}' WHERE student_id='${studentId}'")
+    int updateStudentPassword(@Param("studentId") Long studentId, @Param("password") String password);
+
+    @Update("UPDATE teacher SET password='${password}' WHERE teacher_id='${teacherId}'")
+    int updateTeacherPassword(@Param("teacherId") Long teacherId, @Param("password") String password);
 }

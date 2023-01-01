@@ -21,4 +21,8 @@ public interface LoginService {
     int activateStudent(Long studentId, String password, String email);
 
     int activateTeacher(Long teacherId, String password, String email);
+
+    int modifyStudentPassword(Long studentId, String password);
+
+    int modifyTeacherPassword(Long teacherId, String password);
 }
