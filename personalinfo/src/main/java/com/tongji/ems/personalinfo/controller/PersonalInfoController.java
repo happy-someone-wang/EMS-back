@@ -4,10 +4,8 @@ import com.tongji.ems.personalinfo.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -27,6 +25,47 @@ public class PersonalInfoController {
         try {
             Integer Id = Integer.valueOf(id);
             return ResponseEntity.ok(personalInfoService.getPersonalInfo(Id, role));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<Map<String, Object>> postPersonalInfo(
+            @RequestBody Object person,
+            @RequestParam("role") String role
+    ) {
+        try {
+            return ResponseEntity.ok(personalInfoService.postPersonalInfo(person, role));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    @PutMapping()
+    public ResponseEntity<Map<String, Object>> updatePersonalInfo(
+            @RequestBody Object person,
+            @RequestParam("role") String role
+    ) {
+        try {
+            return ResponseEntity.ok(personalInfoService.updatePersonalInfo(person, role));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    @PutMapping("/avatar")
+    public ResponseEntity<String> updatePersonalAvatar(
+            @RequestPart("avatar") MultipartFile avatar,
+            @RequestParam("id") String id,
+            @RequestParam("role") String role
+    ) {
+        try {
+            Integer Id = Integer.valueOf(id);
+            return ResponseEntity.ok(personalInfoService.changeAvatar(avatar, Id, role));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(400).body(null);
