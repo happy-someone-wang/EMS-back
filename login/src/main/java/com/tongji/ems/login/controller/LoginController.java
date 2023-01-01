@@ -108,19 +108,43 @@ public class LoginController {
 
     @GetMapping("/activateAccount")
     public ResponseEntity<String> activateAccount(
-            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "userId") Long userId,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "role") String role,
             @RequestParam(value = "email") String email
     ) {
         try {
-            MailSender.sendEmail(email, userId, password, role);
-            return ResponseEntity.ok("success");
-        }
-        catch (Exception e){
+            Map<String, Object> personalInfo = personalInfoClient.getPersonalInfo(userId, role);
+            if (personalInfo == null) {
+                return ResponseEntity.status(400).body("账号不存在");
+            }
+            if (personalInfo.get("email") != null) {
+                return ResponseEntity.status(400).body("账号已经激活过，请使用账号密码登录");
+            }
+            MailSender.sendEmail(email, String.valueOf(userId), password, role);
+            return ResponseEntity.ok("邮件发送成功");
+        } catch (Exception e) {
             return ResponseEntity.status(400).body(null);
         }
 
+    }
+
+    @GetMapping("/verifyEmail")
+    public ResponseEntity<String> verifyEmail(
+            @RequestParam("code") String code
+    ) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String str = new String(decoder.decode(code));
+        String[] strings = str.split("/");
+        String userId = strings[0];
+        String password = strings[1];
+        String role = strings[2];
+        String time = strings[3];
+        if (System.currentTimeMillis() - Long.parseLong(time) > 60 * 60 * 24) {
+            return ResponseEntity.status(400).body("验证超时");
+        }
+
+        return ResponseEntity.ok(userId + time + "?" + System.currentTimeMillis());
     }
 
 }

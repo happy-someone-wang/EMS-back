@@ -68,14 +68,14 @@ public class MailSender {
         // 指明邮件的收件人
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
         // 邮件的标题
-        message.setSubject("JavaMail发送简单文本邮件");
+        message.setSubject("实验教学管理系统EMS:请验证您的邮箱");
         // 邮件的文本内容
 
         Base64.Encoder encoder = Base64.getEncoder();
         String str = userId + "/" + password + "/" + role + "/" + System.currentTimeMillis();
         String code = encoder.encodeToString(str.getBytes());
 
-        message.setContent("尊敬的" + userId + "您好！\n" + "请点击下方链接验证您的邮箱:\n" + "        http://localhost:8081/api/user/email?code=" + code, "text/html;charset=UTF-8");
+        message.setContent("尊敬的" + userId + "您好！\n" + "请点击下方链接验证您的邮箱:\n" + "        http://localhost:8081/login/verifyEmail?code=" + code, "text/html;charset=UTF-8");
         // 返回创建好的邮件对象
         return message;
     }
@@ -83,6 +83,7 @@ public class MailSender {
     /**
      * @Method: createMailWithHtml
      * @Description: 创建一封HTML邮件
+     * 未用
      */
     public static MimeMessage createMailWithHtml(Session session)
             throws Exception {
@@ -103,6 +104,7 @@ public class MailSender {
     /**
      * @Method: createMailWithResource
      * @Description: 创建一封包含附件的邮件
+     * 未用
      */
     public static MimeMessage createMailWithResource(Session session)
             throws Exception {
