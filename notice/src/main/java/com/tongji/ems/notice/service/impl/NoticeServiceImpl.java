@@ -1,17 +1,11 @@
-package com.tongji.ems.admin.service.impl;
+package com.tongji.ems.notice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
-<<<<<<< HEAD:notice/src/main/java/com/tongji/ems/notice/service/impl/NoticeServiceImpl.java
 import com.tongji.ems.notice.mapper.NoticeMapper;
 import com.tongji.ems.notice.model.CourseNotice;
 import com.tongji.ems.notice.service.NoticeService;
 import com.tongji.ems.notice.util.GenerateIdTenth;
-=======
-import com.tongji.ems.admin.mapper.NoticeMapper;
-import com.tongji.ems.admin.model.Notice;
-import com.tongji.ems.admin.service.NoticeService;
->>>>>>> 0e4382000f8cef9bebd113ac9f312d50f8e280cf:notice/src/main/java/com/tongji/ems/admin/service/impl/NoticeServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +50,7 @@ public class NoticeServiceImpl implements NoticeService {
             List<Map<String, Object>> notices = new ArrayList<>();
             for (CourseNotice notice : noticeList) {
                 Map<String, Object> item = new HashMap<>();
-                Map<String, Object> teacher = personalInfoClient.getPersonalInfo(notice.getTeacherId(), "teacher");
+                Map<String, Object> teacher = personalInfoClient.getPersonalInfo(Long.valueOf(notice.getTeacherId()), "teacher");
                 item.put("notice", notice);
                 item.put("teacher", teacher);
                 notices.add(item);
@@ -82,7 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
             result.put("status", "查询成功");
             result.put("notice", notice);
             if (notice.getTeacherId() != null) {
-                Map<String, Object> teacher = personalInfoClient.getPersonalInfo(notice.getTeacherId(), "teacher");
+                Map<String, Object> teacher = personalInfoClient.getPersonalInfo(Long.valueOf(notice.getTeacherId()), "teacher");
                 if (teacher != null) {
                     result.put("teacher", teacher);
                 }
