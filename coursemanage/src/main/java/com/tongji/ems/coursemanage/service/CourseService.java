@@ -1,6 +1,7 @@
 package com.tongji.ems.coursemanage.service;
 
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface CourseService {
     List<Long> getOneCourseAllTeachers(Long courseId);
 
     List<Long> getOneStudentAllCourses(Long studentId);
+
+    List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId);
 
     int addExperiment(Course course);
 

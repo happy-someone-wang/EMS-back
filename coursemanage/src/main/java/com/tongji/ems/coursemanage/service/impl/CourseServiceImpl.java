@@ -2,6 +2,7 @@ package com.tongji.ems.coursemanage.service.impl;
 
 import com.tongji.ems.coursemanage.mapper.CourseMapper;
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import com.tongji.ems.coursemanage.service.CourseService;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Long> getOneStudentAllCourses(Long studentId) {
         return courseMapper.selectOneStudentAllCourses(studentId);
+    }
+
+    @Override
+    public List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId) {
+        return courseMapper.selectOneTeacherAllCourses(teacherId);
     }
 
     @Override

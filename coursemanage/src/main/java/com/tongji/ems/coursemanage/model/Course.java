@@ -23,6 +23,7 @@ public class Course {
     private Date startTime;
     private Date endTime;
     private List<String> teacher;
+    private Integer level;
 
     public Course() {
     }
@@ -81,5 +82,13 @@ public class Course {
 
     public void setTeacher(List<String> teacher) {
         this.teacher = teacher;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 }

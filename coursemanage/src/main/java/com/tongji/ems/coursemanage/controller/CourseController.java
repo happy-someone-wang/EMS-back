@@ -1,6 +1,7 @@
 package com.tongji.ems.coursemanage.controller;
 
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import com.tongji.ems.coursemanage.service.CourseService;
 import com.tongji.ems.coursemanage.util.GenerateIdTenth;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
@@ -27,28 +28,11 @@ public class CourseController {
     @Autowired
     PersonalInfoClient personalInfoClient;
 
-//    @GetMapping("/getCourseById")
-//    public ResponseEntity<Map<String, Object>> getCourseById(
-//            @RequestParam(value = "courseId") Long courseId
-//    ) {
-//        try {
-//            return ResponseEntity.ok(courseService.getCourseById(courseId));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(400).body(null);
-//        }
-//    }
-
-//    @GetMapping("/getOneCourseAllTeachers")
-//    public ResponseEntity<Map<String, Object>> getOneCourseAllTeachers(
-//            @RequestParam(value = "courseId") Long courseId
-//    ) {
-//        try {
-//            return ResponseEntity.ok(courseService.getOneCourseAllTeachers(courseId));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(400).body(null);
-//        }
-//    }
-
+    /**
+     * 根据学生的ID获取到所有课程
+     * @param studentId
+     * @return
+     */
     @GetMapping("/getStudentCourseList")
     public ResponseEntity<List<Course>> getStudentCourseList(
             @RequestParam(value = "studentId") Long studentId
@@ -78,7 +62,38 @@ public class CourseController {
         }
     }
 
+    /**
+     * 获取某个老师的所有课程，其中同时会返回level，即老师在在该门课程的身份
+     * @param teacherId
+     * @return
+     */
+    @GetMapping("/getTeacherCourseList")
+    public ResponseEntity<List<Course>> getTeacherCourseList(
+            @RequestParam(value = "teacherId") Long teacherId
+    ){
+        try {
+            ArrayList<Course> courses = new ArrayList<>();
+            List<TeacherTeachCourse> teaches = courseService.getOneTeacherAllCourses(teacherId);
+            for (TeacherTeachCourse teach : teaches) {
+                Course courseInfo = courseService.getCourseById(teach.getCourseId());
+                courseInfo.setLevel(teach.getLevel());
+                courses.add(courseInfo);
+            }
 
+            return ResponseEntity.ok(courses);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 添加实验课程
+     * @param name
+     * @param credit
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @PostMapping("/postCourse")
     public ResponseEntity<String> postCourse(
             @RequestParam(value = "name") String name,

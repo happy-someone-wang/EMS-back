@@ -1,6 +1,7 @@
 package com.tongji.ems.coursemanage.mapper;
 
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface CourseMapper {
 
     @Select("SELECT course_id FROM student_join_course WHERE student_id=${studentId}")
     List<Long> selectOneStudentAllCourses(@Param("studentId") Long studentId);
+
+    @Select("SELECT * FROM teacher_teach_course WHERE teacher_id=${teacherId}")
+    List<TeacherTeachCourse> selectOneTeacherAllCourses(@Param("teacherId") Long teacherId);
 
     @Insert("INSERT into course (course_id,name,credit,start_time,end_time) " + "values(#{courseId},#{name},#{courseId},#{startTime},#{endTime})")
     int insertExperiment(Course course);
