@@ -25,6 +25,11 @@ public class ExperimentController {
     @Autowired
     ExperimentService experimentService;
 
+    /**
+     * 获取课程中的所有实验
+     * @param courseId
+     * @return
+     */
     @GetMapping("/getExperimentList")
     public ResponseEntity<List<Experiment>> getExperimentList(
             @RequestParam(value = "courseId") Long courseId
@@ -43,6 +48,15 @@ public class ExperimentController {
         }
     }
 
+    /**
+     * 添加实验项目
+     * @param name
+     * @param courseId
+     * @param createTime
+     * @param deadline
+     * @param introduction
+     * @return
+     */
     @PostMapping("/postExperiment")
     public ResponseEntity<String> postExperiment(
             @RequestParam(value = "name") String name,
@@ -67,6 +81,14 @@ public class ExperimentController {
         }
     }
 
+    /**
+     * 修改实验项目，能够修改的信息只有名称、截止时间、实验简介
+     * @param experimentId
+     * @param name
+     * @param deadline
+     * @param introduction
+     * @return
+     */
     @PutMapping("/putExperiment")
     public ResponseEntity<String> putExperiment(
             @RequestParam(value = "experimentId") Long experimentId,
@@ -86,6 +108,11 @@ public class ExperimentController {
         }
     }
 
+    /**
+     * 删除实验项目
+     * @param experimentId
+     * @return
+     */
     @DeleteMapping("/deleteExperiment")
     public ResponseEntity<String> deleteExperiment(
             @RequestParam(value = "experimentId") Long experimentId
@@ -101,4 +128,6 @@ public class ExperimentController {
             return ResponseEntity.status(400).body(null);
         }
     }
+
+
 }

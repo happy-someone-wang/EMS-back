@@ -2,16 +2,15 @@ package com.tongji.ems.coursemanage.controller;
 
 import com.tongji.ems.coursemanage.model.Course;
 import com.tongji.ems.coursemanage.service.CourseService;
+import com.tongji.ems.coursemanage.util.GenerateIdTenth;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author 2051196 刘一飞
@@ -52,7 +51,7 @@ public class CourseController {
 
     @GetMapping("/getStudentCourseList")
     public ResponseEntity<List<Course>> getStudentCourseList(
-            @RequestParam(value  = "studentId") Long studentId
+            @RequestParam(value = "studentId") Long studentId
     ) {
         try {
             ArrayList<Course> courses = new ArrayList<>();
@@ -74,6 +73,82 @@ public class CourseController {
             }
 
             return ResponseEntity.ok(courses);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+
+    @PostMapping("/postCourse")
+    public ResponseEntity<String> postCourse(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "credit") Float credit,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
+    ) {
+        try {
+            Long courseId = GenerateIdTenth.get10UniqueId();
+            Date startTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime);
+            Date endTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endTime);
+            Course course = new Course(courseId, name, credit, startTime_date, endTime_date);
+            int result = courseService.addExperiment(course);
+            if (result == 1) {
+                return ResponseEntity.ok("插入成功");
+            } else {
+                return ResponseEntity.status(400).body("插入失败");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 修改实验课程
+     *
+     * @param courseId
+     * @param name
+     * @param credit
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PutMapping("/putCourse")
+    public ResponseEntity<String> putCourse(
+            @RequestParam(value = "courseId") Long courseId,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "credit") String credit,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
+    ) {
+        try {
+            int result = courseService.modifyExperiment(courseId, name, credit, startTime, endTime);
+            if (result == 1) {
+                return ResponseEntity.ok("修改成功");
+            } else {
+                return ResponseEntity.status(400).body("修改失败");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 删除实验课程
+     *
+     * @param courseId
+     * @return
+     */
+    @DeleteMapping("/deleteCourse")
+    public ResponseEntity<String> deleteCourse(
+            @RequestParam(value = "courseId") Long courseId
+    ) {
+        try {
+            int result = courseService.removeExperiment(courseId);
+            if (result == 1) {
+                return ResponseEntity.ok("删除成功");
+            } else {
+                return ResponseEntity.status(400).body("删除失败");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null);
         }

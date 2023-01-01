@@ -18,4 +18,10 @@ public interface CourseService {
     List<Long> getOneCourseAllTeachers(Long courseId);
 
     List<Long> getOneStudentAllCourses(Long studentId);
+
+    int addExperiment(Course course);
+
+    int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime);
+
+    int removeExperiment(Long courseId);
 }

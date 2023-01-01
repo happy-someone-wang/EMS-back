@@ -40,4 +40,19 @@ public class CourseServiceImpl implements CourseService {
     public List<Long> getOneStudentAllCourses(Long studentId) {
         return courseMapper.selectOneStudentAllCourses(studentId);
     }
+
+    @Override
+    public int addExperiment(Course course) {
+        return courseMapper.insertExperiment(course);
+    }
+
+    @Override
+    public int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime) {
+        return courseMapper.updateExperiment(courseId, name, credit, startTime, endTime);
+    }
+
+    @Override
+    public int removeExperiment(Long courseId) {
+        return courseMapper.deleteExperiment(courseId);
+    }
 }
