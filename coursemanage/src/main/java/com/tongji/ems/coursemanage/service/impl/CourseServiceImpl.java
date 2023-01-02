@@ -58,8 +58,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime) {
-        return courseMapper.updateExperiment(courseId, name, credit, startTime, endTime);
+    public int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime,String weekday,String startCourse,String endCourse,String location) {
+        return courseMapper.updateExperiment(courseId, name, credit, startTime, endTime,weekday,startCourse,endCourse,location);
     }
 
     @Override

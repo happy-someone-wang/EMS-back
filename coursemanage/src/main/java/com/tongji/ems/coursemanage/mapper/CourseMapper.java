@@ -28,11 +28,11 @@ public interface CourseMapper {
     @Select("SELECT * FROM teacher_teach_course WHERE teacher_id=${teacherId}")
     List<TeacherTeachCourse> selectOneTeacherAllCourses(@Param("teacherId") Long teacherId);
 
-    @Insert("INSERT into course (course_id,name,credit,start_time,end_time) " + "values(#{courseId},#{name},#{courseId},#{startTime},#{endTime})")
+    @Insert("INSERT into course (course_id,name,credit,start_time,end_time,weekday,start_course,end_course,location) " + "values(#{courseId},#{name},#{credit},#{startTime},#{endTime},#{weekday},#{startCourse},#{endCourse},#{location})")
     int insertExperiment(Course course);
 
-    @Update("UPDATE course SET name='${name}',credit='${credit}',start_time='${startTime}',end_time='${endTime}' WHERE course_id='${courseId}'")
-    int updateExperiment(@Param("courseId") Long courseId, @Param("name") String name, @Param("credit") String credit, @Param("startTime") String startTime, @Param("endTime") String endTime);
+    @Update("UPDATE course SET name='${name}',credit='${credit}',start_time='${startTime}',end_time='${endTime}' ,end_time='${endTime}' ,weekday='${weekday}',start_course='${startCourse}',end_course='${endCourse}',location='${location}' WHERE course_id='${courseId}'")
+    int updateExperiment(@Param("courseId") Long courseId, @Param("name") String name, @Param("credit") String credit, @Param("startTime") String startTime,@Param("endTime") String endTime, @Param("weekday") String weekday,@Param("startCourse") String startCourse,@Param("endCourse") String endCourse,@Param("location") String location);
 
     @Delete("DELETE FROM course WHERE course_id=${courseId}")
     int deleteExperiment(@Param("courseId") Long courseId);
