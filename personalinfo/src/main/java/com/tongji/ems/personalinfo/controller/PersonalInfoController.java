@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/person")
 public class PersonalInfoController {
