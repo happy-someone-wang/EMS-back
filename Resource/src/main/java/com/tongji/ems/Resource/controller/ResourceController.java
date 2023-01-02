@@ -1,6 +1,7 @@
 package com.tongji.ems.Resource.controller;
 
 import com.tongji.ems.Resource.model.Resource;
+import com.tongji.ems.Resource.service.OssService;
 import com.tongji.ems.Resource.service.ResourceService;
 import com.tongji.ems.feign.clients.FileStoreClient;
 import org.jetbrains.annotations.NotNull;
@@ -28,61 +29,16 @@ public class ResourceController {
     private ResourceService resourceService;
 
     @Autowired
-    private FileStoreClient fileStoreClient;
+    private OssService ossService;
+
 
     public static String STATIC_PATH = "G:/Resource/";
 
     @GetMapping("/download")
-    public String uploadResource(
-            HttpServletRequest request,
-            HttpServletResponse response,
+    public ResponseEntity<Map<String, Object>> downloadResource(
             @NotNull @RequestParam Long resourceId)
     {
-        Resource resource=resourceService.downloadResource(resourceId);
-        File file = new File(resource.getFilePath(), resource.getFileName());
-        if (file.exists()) {
-            response.setContentType("application/force-download");// 设置强制下载不打开
-            try {
-                // 设置文件名
-                response.addHeader("Content-Disposition", "attachment;fileName=" +  URLEncoder.encode(resource.getFileName()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            byte[] buffer = new byte[1024];
-            FileInputStream fis = null;
-            BufferedInputStream bis = null;
-            try {
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
-                OutputStream os = response.getOutputStream();
-                int i = bis.read(buffer);
-                //实现文件下载
-                while (i != -1) {
-                    os.write(buffer, 0, i);
-                    i = bis.read(buffer);
-                }
-                System.out.println("success");
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (bis != null) {
-                    try {
-                        bis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return "完成";
-        }
-        return "失败";
+        return ResponseEntity.ok(resourceService.downloadResource(resourceId));
     }
 
 
@@ -117,7 +73,7 @@ public class ResourceController {
         try {
             //文件保存到本地
             //file.transferTo(dest);
-            filePath=fileStoreClient.uploadFile(file);
+            filePath=ossService.uploadFile(file);
             Resource resource=new Resource(get10UniqueId(),teacherId,courseId,type,file.getSize(),fileName,filePath);
             return ResponseEntity.ok(resourceService.addResource(resource));
         } catch (Exception e) {

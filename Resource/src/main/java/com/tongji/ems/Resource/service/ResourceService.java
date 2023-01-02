@@ -8,7 +8,7 @@ public interface ResourceService {
 
     public Map<String, Object> addResource(Resource resource);
 
-    public Resource downloadResource(Long resourceId);
+    public Map<String, Object> downloadResource(Long resourceId);
 
     public Map<String, Object> checkResource(Long courseId);
 }

@@ -35,14 +35,17 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Resource downloadResource(Long resourceId) {
+    public Map<String, Object> downloadResource(Long resourceId) {
+        Map<String, Object> result = new HashMap<>();
         Resource resource=new Resource();
         try {
             resource = resourceMapper.selectById(resourceId);
         } catch (Exception e) {
             return null;
         }
-        return resource;
+        result.put("path",resource.getFilePath());
+        result.put("name",resource.getFileName());
+        return result;
     }
 
     @Override
