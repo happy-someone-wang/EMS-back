@@ -16,6 +16,8 @@ spring:
 logging:
   level:
     root: info
+    web: debug
+    sql: debug
 eureka:
   client:
     service-url:

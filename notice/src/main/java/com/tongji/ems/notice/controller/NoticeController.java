@@ -1,11 +1,14 @@
 package com.tongji.ems.notice.controller;
 
+import com.tongji.ems.notice.dto.ImageUploadDto;
 import com.tongji.ems.notice.model.CourseNotice;
 import com.tongji.ems.notice.model.SystemNotice;
 import com.tongji.ems.notice.service.NoticeService;
+import com.tongji.ems.notice.service.OssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -16,6 +19,21 @@ public class NoticeController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Autowired
+    private OssService ossService;
+
+    @PostMapping("/image")
+    public ResponseEntity<Map<String,Object>> uploadFile(
+            @RequestBody ImageUploadDto image
+            ) {
+        try {
+            return ResponseEntity.ok(ossService.uploadImage(image.getFile(), image.getFileName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
 
     @GetMapping("courseNoticeList")
     public ResponseEntity<Map<String, Object>> getNoticeList(
