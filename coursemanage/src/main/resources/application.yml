@@ -19,7 +19,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8080/eureka
+      defaultZone: http://123.60.156.14:8080/eureka
 
 
 
