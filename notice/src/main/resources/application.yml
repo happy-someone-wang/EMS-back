@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8089
 
 spring:
   datasource:
@@ -16,6 +16,8 @@ spring:
 logging:
   level:
     root: info
+    web: debug
+    sql: debug
 eureka:
   client:
     service-url:

@@ -5,11 +5,14 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.tongji.ems.notice.service.OssService;
 import com.tongji.ems.notice.util.ConstantPropertiesUtils;
+import com.tongji.ems.notice.util.ImageUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -23,7 +26,7 @@ public class OssServiceImpl implements OssService {
         String bucketName = ConstantPropertiesUtils.BUCKET_NAME;
         if (file != null) {
             try {
-                System.out.println("接收到文件"+file);
+                System.out.println("接收到文件" + file);
                 //创建OSS实例
                 OSS ossClient = new OSSClientBuilder().build(endPoint, accessKeyId, accessKeySecret);
                 // 获取上传文件流
@@ -77,5 +80,15 @@ public class OssServiceImpl implements OssService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public Map<String, Object> uploadImage(String file, String filename) {
+        Map<String, Object> result = new HashMap<>();
+        MultipartFile image = ImageUtils.base64ToMultipartFile(file);
+        String url = uploadFile(image);
+        result.put("location", url);
+        result.put("fileName", filename);
+        return result;
     }
 }
