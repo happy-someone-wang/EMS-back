@@ -1,6 +1,7 @@
 package com.tongji.ems.feign.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ public interface FileStoreClient {
      * @param file 要上传的文件
      * @return 访问文件的URL
      */
-    @PostMapping("/file")
+    @PostMapping(value = "/file" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadFile(@RequestPart(value = "file") MultipartFile file);
 
     /**
