@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tongji.ems.Resource.mapper.ResourceMapper;
 import com.tongji.ems.Resource.model.Resource;
 import com.tongji.ems.Resource.service.ResourceService;
+import com.tongji.ems.feign.clients.FileStoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private ResourceMapper resourceMapper;
+
+    @Autowired
+    private FileStoreClient fileStoreClient;
 
     @Override
     public Map<String, Object> addResource(Resource resource) {

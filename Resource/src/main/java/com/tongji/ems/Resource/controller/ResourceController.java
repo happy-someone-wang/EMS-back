@@ -2,6 +2,7 @@ package com.tongji.ems.Resource.controller;
 
 import com.tongji.ems.Resource.model.Resource;
 import com.tongji.ems.Resource.service.ResourceService;
+import com.tongji.ems.feign.clients.FileStoreClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,10 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    public static String STATIC_PATH = "G:/Resource";
+    @Autowired
+    private FileStoreClient fileStoreClient;
+
+    public static String STATIC_PATH = "G:/Resource/";
 
     @GetMapping("/download")
     public String uploadResource(
@@ -83,7 +87,7 @@ public class ResourceController {
 
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, Object>> uploadResource(@NotNull @RequestBody MultipartFile file,
+    public ResponseEntity<Map<String, Object>> uploadResource(@RequestPart MultipartFile file,
                                                               @RequestParam Long teacherId,
                                                               @RequestParam Long courseId,
                                                               @RequestParam String type
@@ -94,6 +98,7 @@ public class ResourceController {
         {
             return ResponseEntity.status(400).body(null);
         }
+
         Date date =new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String sj=dateFormat.format(date);
@@ -111,10 +116,11 @@ public class ResourceController {
         }
         try {
             //文件保存到本地
-            file.transferTo(dest);
+            //file.transferTo(dest);
+            filePath=fileStoreClient.uploadFile(file);
             Resource resource=new Resource(get10UniqueId(),teacherId,courseId,type,file.getSize(),fileName,filePath);
             return ResponseEntity.ok(resourceService.addResource(resource));
-        } catch (IllegalStateException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(400).body(null);
         }
