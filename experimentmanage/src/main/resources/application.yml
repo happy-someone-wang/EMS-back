@@ -21,5 +21,11 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8080/eureka
 
+aliyun:
+  endpoint: oss-cn-shanghai.aliyuncs.com
+  accessKeyId: LTAI5tM8Q255sUYhQtuP6H5y
+  accessKeySecret: CRW2Uv49TDpomgbhvoewRQIt0KFQNb
+  bucketName: tj-etms
+
 
 
