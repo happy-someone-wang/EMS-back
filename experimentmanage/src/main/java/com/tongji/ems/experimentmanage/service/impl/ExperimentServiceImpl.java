@@ -6,6 +6,7 @@ import com.tongji.ems.experimentmanage.service.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,15 +23,27 @@ public class ExperimentServiceImpl implements ExperimentService {
     ExperimentMapper experimentMapper;
 
     @Override
-    public Map<String, Object> getExperimentById(Long experimentId) {
-        Map<String, Object> result = new HashMap<>();
-        Experiment experiment = experimentMapper.selectExperimentById(experimentId);
-        result.put("course",experiment);
-        return result;
+    public Experiment getExperimentById(Long experimentId) {
+        return experimentMapper.selectExperimentById(experimentId);
     }
 
     @Override
     public List<Long> getOneCourseAllExperiment(Long courseId) {
         return experimentMapper.selectOneCourseAllExperiments(courseId);
+    }
+
+    @Override
+    public int addExperiment(Experiment experiment) {
+        return experimentMapper.insertExperiment(experiment);
+    }
+
+    @Override
+    public int modifyExperiment(Long experimentId, String name, String deadline, String introduction) {
+        return experimentMapper.updateExperiment(experimentId, name, deadline, introduction);
+    }
+
+    @Override
+    public int removeExperiment(Long experimentId) {
+        return experimentMapper.deleteExperiment(experimentId);
     }
 }

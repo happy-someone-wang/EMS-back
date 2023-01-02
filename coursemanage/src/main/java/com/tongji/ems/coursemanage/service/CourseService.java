@@ -1,6 +1,7 @@
 package com.tongji.ems.coursemanage.service;
 
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,17 @@ import java.util.Map;
  */
 @Service
 public interface CourseService {
-    Map<String, Object> getCourseById(Long courseId);
+    Course getCourseById(Long courseId);
 
     List<Long> getOneCourseAllTeachers(Long courseId);
 
     List<Long> getOneStudentAllCourses(Long studentId);
+
+    List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId);
+
+    int addExperiment(Course course);
+
+    int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime);
+
+    int removeExperiment(Long courseId);
 }

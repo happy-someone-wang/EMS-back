@@ -1,25 +1,24 @@
 package com.tongji.ems.coursemanage.controller;
 
+import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import com.tongji.ems.coursemanage.service.CourseService;
+import com.tongji.ems.coursemanage.util.GenerateIdTenth;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author 2051196 刘一飞
  * @Date 2022/12/31
  * @JDKVersion 17.0.4
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -29,52 +28,142 @@ public class CourseController {
     @Autowired
     PersonalInfoClient personalInfoClient;
 
-    @GetMapping("/getCourseById")
-    public ResponseEntity<Map<String, Object>> getCourseById(
-            @RequestParam(value = "courseId") Long courseId
-    ) {
-        try {
-            return ResponseEntity.ok(courseService.getCourseById(courseId));
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body(null);
-        }
-    }
-
-//    @GetMapping("/getOneCourseAllTeachers")
-//    public ResponseEntity<Map<String, Object>> getOneCourseAllTeachers(
-//            @RequestParam(value = "courseId") Long courseId
-//    ) {
-//        try {
-//            return ResponseEntity.ok(courseService.getOneCourseAllTeachers(courseId));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(400).body(null);
-//        }
-//    }
-
+    /**
+     * 根据学生的ID获取到所有课程
+     * @param studentId
+     * @return
+     */
     @GetMapping("/getStudentCourseList")
-    public ResponseEntity<List<Map<String, Object>>> getStudentCourseList(
-            @RequestParam(value  = "studentId") Long studentId
+    public ResponseEntity<List<Course>> getStudentCourseList(
+            @RequestParam(value = "studentId") Long studentId
     ) {
         try {
-            ArrayList<Map<String, Object>> courses = new ArrayList<>();
+            ArrayList<Course> courses = new ArrayList<>();
             List<Long> coursesIds = courseService.getOneStudentAllCourses(studentId);
             for (Long Id : coursesIds) {
-                Map<String, Object> courseInfo = courseService.getCourseById(Id);
+                Course courseInfo = courseService.getCourseById(Id);
 
                 // 获取当前课程所有授课老师信息
-                ArrayList<Map<String, Object>> teachers = new ArrayList<>();
+                ArrayList<String> teachers = new ArrayList<>();
                 List<Long> teacherIds = courseService.getOneCourseAllTeachers(Id);
                 for (Long teacherId : teacherIds) {
                     Map<String, Object> teacher = personalInfoClient.getPersonalInfo(teacherId, "teacher");
-                    teachers.add(teacher);
+                    teachers.add((String) teacher.get("name"));
                 }
                 // 将授课老师信息加入map中
-                courseInfo.put("teachers",teachers);
+                courseInfo.setTeacher(teachers);
 
                 courses.add(courseInfo);
             }
 
             return ResponseEntity.ok(courses);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 获取某个老师的所有课程，其中同时会返回level，即老师在在该门课程的身份
+     * @param teacherId
+     * @return
+     */
+    @GetMapping("/getTeacherCourseList")
+    public ResponseEntity<List<Course>> getTeacherCourseList(
+            @RequestParam(value = "teacherId") Long teacherId
+    ){
+        try {
+            ArrayList<Course> courses = new ArrayList<>();
+            List<TeacherTeachCourse> teaches = courseService.getOneTeacherAllCourses(teacherId);
+            for (TeacherTeachCourse teach : teaches) {
+                Course courseInfo = courseService.getCourseById(teach.getCourseId());
+                courseInfo.setLevel(teach.getLevel());
+                courses.add(courseInfo);
+            }
+
+            return ResponseEntity.ok(courses);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 添加实验课程
+     * @param name
+     * @param credit
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PostMapping("/postCourse")
+    public ResponseEntity<String> postCourse(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "credit") Float credit,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
+    ) {
+        try {
+            Long courseId = GenerateIdTenth.get10UniqueId();
+            Date startTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime);
+            Date endTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endTime);
+            Course course = new Course(courseId, name, credit, startTime_date, endTime_date);
+            int result = courseService.addExperiment(course);
+            if (result == 1) {
+                return ResponseEntity.ok("插入成功");
+            } else {
+                return ResponseEntity.status(400).body("插入失败");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 修改实验课程
+     *
+     * @param courseId
+     * @param name
+     * @param credit
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @PutMapping("/putCourse")
+    public ResponseEntity<String> putCourse(
+            @RequestParam(value = "courseId") Long courseId,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "credit") String credit,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
+    ) {
+        try {
+            int result = courseService.modifyExperiment(courseId, name, credit, startTime, endTime);
+            if (result == 1) {
+                return ResponseEntity.ok("修改成功");
+            } else {
+                return ResponseEntity.status(400).body("修改失败");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    /**
+     * 删除实验课程
+     *
+     * @param courseId
+     * @return
+     */
+    @DeleteMapping("/deleteCourse")
+    public ResponseEntity<String> deleteCourse(
+            @RequestParam(value = "courseId") Long courseId
+    ) {
+        try {
+            int result = courseService.removeExperiment(courseId);
+            if (result == 1) {
+                return ResponseEntity.ok("删除成功");
+            } else {
+                return ResponseEntity.status(400).body("删除失败");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(400).body(null);
         }

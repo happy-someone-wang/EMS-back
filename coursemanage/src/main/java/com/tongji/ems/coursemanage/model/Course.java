@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author 2051196 刘一飞
@@ -21,6 +22,8 @@ public class Course {
     private Float credit;
     private Date startTime;
     private Date endTime;
+    private List<String> teacher;
+    private Integer level;
 
     public Course() {
     }
@@ -71,5 +74,21 @@ public class Course {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public List<String> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(List<String> teacher) {
+        this.teacher = teacher;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 }

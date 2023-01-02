@@ -2,6 +2,7 @@ package com.tongji.ems.coursemanage.service.impl;
 
 import com.tongji.ems.coursemanage.mapper.CourseMapper;
 import com.tongji.ems.coursemanage.model.Course;
+import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import com.tongji.ems.coursemanage.service.CourseService;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,8 @@ public class CourseServiceImpl implements CourseService {
     PersonalInfoClient personalInfoClient;
 
     @Override
-    public Map<String, Object> getCourseById(Long courseId) {
-        Map<String, Object> result = new HashMap<>();
-        Course course = courseMapper.selectCourseById(courseId);
-        result.put("course",course);
-        return result;
+    public Course getCourseById(Long courseId) {
+        return courseMapper.selectCourseById(courseId);
     }
 
     @Override
@@ -42,5 +40,25 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Long> getOneStudentAllCourses(Long studentId) {
         return courseMapper.selectOneStudentAllCourses(studentId);
+    }
+
+    @Override
+    public List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId) {
+        return courseMapper.selectOneTeacherAllCourses(teacherId);
+    }
+
+    @Override
+    public int addExperiment(Course course) {
+        return courseMapper.insertExperiment(course);
+    }
+
+    @Override
+    public int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime) {
+        return courseMapper.updateExperiment(courseId, name, credit, startTime, endTime);
+    }
+
+    @Override
+    public int removeExperiment(Long courseId) {
+        return courseMapper.deleteExperiment(courseId);
     }
 }

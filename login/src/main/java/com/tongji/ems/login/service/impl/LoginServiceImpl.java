@@ -27,4 +27,24 @@ public class LoginServiceImpl implements LoginService {
     public Teacher getTeacherById(Long teacherId) {
         return loginMapper.selectTeacherById(teacherId);
     }
+
+    @Override
+    public int activateStudent(Long studentId, String password, String email) {
+        return loginMapper.updateStudent(studentId, password, email);
+    }
+
+    @Override
+    public int activateTeacher(Long teacherId, String password, String email) {
+        return loginMapper.updateTeacher(teacherId, password, email);
+    }
+
+    @Override
+    public int modifyStudentPassword(Long studentId, String password) {
+        return loginMapper.updateStudentPassword(studentId, password);
+    }
+
+    @Override
+    public int modifyTeacherPassword(Long teacherId, String password) {
+        return loginMapper.updateTeacherPassword(teacherId, password);
+    }
 }

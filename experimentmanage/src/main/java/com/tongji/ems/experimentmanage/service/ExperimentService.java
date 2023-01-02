@@ -1,7 +1,9 @@
 package com.tongji.ems.experimentmanage.service;
 
+import com.tongji.ems.experimentmanage.model.Experiment;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,13 @@ import java.util.Map;
  */
 @Service
 public interface ExperimentService {
-    Map<String, Object> getExperimentById(Long experimentId);
+    Experiment getExperimentById(Long experimentId);
 
     List<Long> getOneCourseAllExperiment(Long courseId);
+
+    int addExperiment(Experiment experiment);
+
+    int modifyExperiment(Long experimentId, String name, String deadline, String introduction);
+
+    int removeExperiment(Long experimentId);
 }
