@@ -64,6 +64,8 @@ public class PersonalInfoController {
             @RequestParam("role") String role
     ) {
         try {
+            System.out.println("接收到数据" + avatar.getName());
+            System.out.println("接收到数据" + id + role);
             Integer Id = Integer.valueOf(id);
             return ResponseEntity.ok(personalInfoService.changeAvatar(avatar, Id, role));
         } catch (Exception e) {

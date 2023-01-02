@@ -199,11 +199,12 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
 
     @Override
     public String changeAvatar(MultipartFile avatar, Integer Id, String role) {
-        String avatarUrl = fileStoreClient.uploadFile(avatar);
         if (Id == null || Id <= 0) {
             return null;
         }
+        System.out.println("personalInfo接收到文件"+avatar.getName());
         if (role.equals("teacher")) {
+            String avatarUrl = fileStoreClient.uploadFile(avatar);
             Teacher teacher = teacherInfoMapper.selectById(Id);
             if (teacher != null) {
                 teacher.setAvatar(avatarUrl);
@@ -211,10 +212,12 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
                 return avatarUrl;
             }
         } else if (role.equals("student")) {
+            String avatarUrl = fileStoreClient.uploadFile(avatar);
             Student student = studentInfoMapper.selectById(Id);
             if (student != null) {
                 student.setAvatar(avatarUrl);
                 studentInfoMapper.updateById(student);
+                System.out.println(student);
                 return avatarUrl;
             }
         } else {
