@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static com.tongji.ems.Resource.util.GenerateIdTenth.get10UniqueId;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/resource")
 public class ResourceController {

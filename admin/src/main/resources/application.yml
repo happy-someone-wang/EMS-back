@@ -22,6 +22,9 @@ logging:
   level:
     root: debug
 eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: ${HOST}
   client:
     service-url:
       defaultZone: http://123.60.156.14:8080/eureka

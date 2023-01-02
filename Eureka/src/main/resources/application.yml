@@ -4,6 +4,8 @@ server:
 eureka:
   instance:
     hostname: eureka
+    ip-address: ${HOST}
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://127.0.0.1:8080/eureka
