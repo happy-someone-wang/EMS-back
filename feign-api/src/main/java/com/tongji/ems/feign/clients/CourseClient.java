@@ -14,7 +14,7 @@ public interface CourseClient {
      * @param courseId
      * @return
      */
-    @GetMapping("/course/student")
+    @GetMapping("/course/courseStudent")
     public List<Long> getCourseStudentList(@RequestParam("courseId") Long courseId);
 
     /**
@@ -23,7 +23,7 @@ public interface CourseClient {
      * @param studentId
      * @return
      */
-    @GetMapping("/student/course")
+    @GetMapping("/course/studentCourse")
     public List<Long> getCourseListOfStudent(@RequestParam("studentId") Long studentId);
 
 }

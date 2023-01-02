@@ -5,7 +5,6 @@ import com.tongji.ems.coursemanage.model.TeacherTeachCourse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author 2051196 刘一飞
@@ -19,6 +18,8 @@ public interface CourseService {
     List<Long> getOneCourseAllTeachers(Long courseId);
 
     List<Long> getOneStudentAllCourses(Long studentId);
+
+    List<Long> getOneCourseAllStudents(Long courseId);
 
     List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId);
 

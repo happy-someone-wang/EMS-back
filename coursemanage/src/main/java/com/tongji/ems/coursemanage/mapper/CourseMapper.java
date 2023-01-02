@@ -22,6 +22,9 @@ public interface CourseMapper {
     @Select("SELECT course_id FROM student_join_course WHERE student_id=${studentId}")
     List<Long> selectOneStudentAllCourses(@Param("studentId") Long studentId);
 
+    @Select("SELECT student_id FROM student_join_course WHERE course_id=${courseId}")
+    List<Long> selectOneCourseAllStudents(@Param("courseId") Long courseId);
+
     @Select("SELECT * FROM teacher_teach_course WHERE teacher_id=${teacherId}")
     List<TeacherTeachCourse> selectOneTeacherAllCourses(@Param("teacherId") Long teacherId);
 

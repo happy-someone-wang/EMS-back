@@ -6,7 +6,6 @@ import com.tongji.ems.coursemanage.service.CourseService;
 import com.tongji.ems.coursemanage.util.GenerateIdTenth;
 import com.tongji.ems.feign.clients.PersonalInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,30 @@ public class CourseController {
     PersonalInfoClient personalInfoClient;
 
     /**
+     * 获取该课程的所有选课学生 远程调用
+     *
+     * @param courseId
+     * @return
+     */
+    @GetMapping("/courseStudent")
+    public List<Long> getCourseStudentList(@RequestParam("courseId") Long courseId) {
+        return courseService.getOneCourseAllStudents(courseId);
+    }
+
+    /**
+     * 获取学生的所有课程 远程调用
+     *
+     * @param studentId
+     * @return
+     */
+    @GetMapping("/studentCourse")
+    public List<Long> getCourseListOfStudent(@RequestParam("studentId") Long studentId) {
+        return courseService.getOneStudentAllCourses(studentId);
+    }
+
+    /**
      * 根据学生的ID获取到所有课程
+     *
      * @param studentId
      * @return
      */
@@ -64,13 +86,14 @@ public class CourseController {
 
     /**
      * 获取某个老师的所有课程，其中同时会返回level，即老师在在该门课程的身份
+     *
      * @param teacherId
      * @return
      */
     @GetMapping("/getTeacherCourseList")
     public ResponseEntity<List<Course>> getTeacherCourseList(
             @RequestParam(value = "teacherId") Long teacherId
-    ){
+    ) {
         try {
             ArrayList<Course> courses = new ArrayList<>();
             List<TeacherTeachCourse> teaches = courseService.getOneTeacherAllCourses(teacherId);
@@ -88,6 +111,7 @@ public class CourseController {
 
     /**
      * 添加实验课程
+     *
      * @param name
      * @param credit
      * @param startTime
