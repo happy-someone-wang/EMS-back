@@ -20,7 +20,6 @@ import java.util.Map;
 
 import static com.tongji.ems.Resource.util.GenerateIdTenth.get10UniqueId;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/resource")
 public class ResourceController {
@@ -41,9 +40,16 @@ public class ResourceController {
         return ResponseEntity.ok(resourceService.downloadResource(resourceId));
     }
 
+    @GetMapping("/delete")
+    public ResponseEntity<Map<String, Object>> deleteResource(
+            @NotNull @RequestParam Long resourceId)
+    {
+        return ResponseEntity.ok(resourceService.deleteResource(resourceId));
+    }
+
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, Object>> uploadResource(@RequestPart MultipartFile file,
+    public ResponseEntity<Map<String, Object>> uploadResource(@RequestBody MultipartFile file,
                                                               @RequestParam Long teacherId,
                                                               @RequestParam Long courseId,
                                                               @RequestParam String type

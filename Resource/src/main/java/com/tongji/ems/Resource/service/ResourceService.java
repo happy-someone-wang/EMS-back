@@ -11,4 +11,6 @@ public interface ResourceService {
     public Map<String, Object> downloadResource(Long resourceId);
 
     public Map<String, Object> checkResource(Long courseId);
+
+    public Map<String, Object> deleteResource(Long resourceId);
 }
