@@ -18,7 +18,6 @@ import java.util.*;
  * @Date 2022/12/31
  * @JDKVersion 17.0.4
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/course")
 public class CourseController {

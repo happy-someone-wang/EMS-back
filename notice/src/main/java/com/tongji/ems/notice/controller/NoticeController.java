@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST})
 @RestController
 @RequestMapping("/notice")
 public class NoticeController {
