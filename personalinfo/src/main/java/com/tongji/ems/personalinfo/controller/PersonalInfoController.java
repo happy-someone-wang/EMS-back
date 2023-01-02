@@ -59,7 +59,7 @@ public class PersonalInfoController {
 
     @PutMapping("/avatar")
     public ResponseEntity<String> updatePersonalAvatar(
-            @RequestPart("avatar") MultipartFile avatar,
+            @RequestParam("avatar") MultipartFile avatar,
             @RequestParam("id") String id,
             @RequestParam("role") String role
     ) {
