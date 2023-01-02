@@ -238,7 +238,7 @@ public class GradeServiceImpl implements GradeService {
         result.put("signGrade", signGrade);
         float courseGrade = (experimentGrade * experimentProportion + signGrade * signProportion) / (experimentProportion + signProportion);
         result.put("courseGrade", courseGrade);
-        return null;
+        return result;
     }
 
     @Override
