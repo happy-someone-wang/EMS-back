@@ -52,6 +52,10 @@ spring:
           uri: lb://resource
           predicates:
             - Path=/resource/**
+        - id: grade
+          uri: lb://grade
+          predicates:
+            - Path=/grade/**
   main:
     web-application-type: reactive
 

@@ -2,10 +2,12 @@ package com.tongji.ems.experimentmanage.controller;
 
 import com.tongji.ems.experimentmanage.model.Experiment;
 import com.tongji.ems.experimentmanage.service.ExperimentService;
+import com.tongji.ems.experimentmanage.service.OssService;
 import com.tongji.ems.experimentmanage.util.GenerateIdTenth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ import java.util.Map;
 public class ExperimentController {
     @Autowired
     ExperimentService experimentService;
+
+    @Autowired
+    OssService ossService;
 
     /**
      * 获取课程中的所有实验
@@ -62,13 +67,18 @@ public class ExperimentController {
             @RequestParam(value = "courseId") Long courseId,
             @RequestParam(value = "createTime") String createTime,
             @RequestParam(value = "deadline") String deadline,
-            @RequestParam(value = "introduction") String introduction
+            @RequestParam(value = "introduction") String introduction,
+            @RequestPart("file") MultipartFile file
     ) {
         try {
+            // 生成实验ID
             Long experimentId = GenerateIdTenth.get10UniqueId();
+            // 格式化时间
             Date createTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(createTime);
             Date deadline_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(deadline);
-            Experiment experiment = new Experiment(experimentId, name, courseId, createTime_date, deadline_date, introduction);
+            // OSS上传文件
+            String content = ossService.uploadFile(file);
+            Experiment experiment = new Experiment(experimentId, name, courseId, createTime_date, deadline_date, introduction,content);
             int result = experimentService.addExperiment(experiment);
             if (result == 1) {
                 return ResponseEntity.ok("插入成功");
@@ -128,5 +138,21 @@ public class ExperimentController {
         }
     }
 
+    /**
+     * 上传文件测试接口
+     * @param file
+     * @return
+     */
+    @PostMapping("/postFile")
+    public ResponseEntity<String> postFile(
+            @RequestPart("file") MultipartFile file
+    ) {
+        try {
+            return ResponseEntity.ok(ossService.uploadFile(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
 
 }

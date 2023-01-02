@@ -43,6 +43,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Long> getOneCourseAllStudents(Long studentId) {
+        return courseMapper.selectOneCourseAllStudents(studentId);
+    }
+
+    @Override
     public List<TeacherTeachCourse> getOneTeacherAllCourses(Long teacherId) {
         return courseMapper.selectOneTeacherAllCourses(teacherId);
     }
