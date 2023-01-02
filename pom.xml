@@ -15,6 +15,8 @@
         <module>admin</module>
         <module>notice</module>
         <module>grade</module>
+        <module>report</module>
+        <module>Resource</module>
     </modules>
 
     <parent>

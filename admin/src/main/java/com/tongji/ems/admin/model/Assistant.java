@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 public class Assistant {
     @TableId(value = "assistant_id")
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long assistant_id;
+    private Long assistantId;
 
     private String name;
 
@@ -21,8 +21,8 @@ public class Assistant {
 
     private String passwd;
 
-    public Assistant(Long assistant_id, String name, Integer gender, String email, String phone, String passwd) {
-        this.assistant_id = assistant_id;
+    public Assistant(Long assistantId, String name, Integer gender, String email, String phone, String passwd) {
+        this.assistantId = assistantId;
         this.name = name;
         this.gender = gender;
         this.email = email;
@@ -34,12 +34,12 @@ public class Assistant {
 
     }
 
-    public Long getAssistant_id() {
-        return assistant_id;
+    public Long getAssistantId() {
+        return assistantId;
     }
 
-    public void setAssistant_id(Long assistant_id) {
-        this.assistant_id = assistant_id;
+    public void setAssistantId(Long assistantId) {
+        this.assistantId = assistantId;
     }
 
     public String getName() {

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 public class Student {
     @TableId(value = "student_id")
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long student_id;
+    private Long studentId;
 
     private String name;
 
@@ -19,8 +19,8 @@ public class Student {
 
     private String passwd;
 
-    public Student(Long student_id, String name, Integer gender, String email, String phone, String passwd) {
-        this.student_id = student_id;
+    public Student(Long studentId, String name, Integer gender, String email, String phone, String passwd) {
+        this.studentId = studentId;
         this.name = name;
         this.gender = gender;
         this.email = email;
@@ -32,12 +32,12 @@ public class Student {
 
     }
 
-    public Long getStudent_id() {
-        return student_id;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent_id(Long student_id) {
-        this.student_id = student_id;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public String getName() {
