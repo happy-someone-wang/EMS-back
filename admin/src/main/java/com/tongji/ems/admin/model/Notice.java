@@ -1,46 +1,35 @@
-package com.tongji.ems.notice.model;
+package com.tongji.ems.admin.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
-import java.util.Date;
+import java.sql.Date;
 
-/**
- * 课程通知
- *
- * @author 赵帅涛
- * @since 2022年12月31日
- */
-@TableName("course_notice")
-public class CourseNotice {
+public class Notice {
     @TableId(value = "notice_id")
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long noticeId;
-    private Integer teacherId;
-    private Integer courseId;
+
+    @JsonSerialize(using= ToStringSerializer.class)
+    private Long teacherId;
+
+    @JsonSerialize(using= ToStringSerializer.class)
+    private Long courseId;
+
     private String title;
+
     private String content;
+
     private Date createTime;
-    private Boolean top;
 
-    public CourseNotice() {
-    }
-
-    public CourseNotice(Long noticeId, Integer teacherId, Integer courseId, String title, String content, Date createTime, Boolean top) {
+    public Notice(Long noticeId, Long teacherId, Long courseId, String title, String content, Date createTime) {
         this.noticeId = noticeId;
         this.teacherId = teacherId;
         this.courseId = courseId;
         this.title = title;
         this.content = content;
         this.createTime = createTime;
-        this.top = top;
-    }
-
-    public Boolean getTop() {
-        return top;
-    }
-
-    public void setTop(Boolean top) {
-        this.top = top;
     }
 
     public Long getNoticeId() {
@@ -51,19 +40,19 @@ public class CourseNotice {
         this.noticeId = noticeId;
     }
 
-    public Integer getTeacherId() {
+    public Long getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(Integer teacherId) {
+    public void setTeacherId(Long teacherId) {
         this.teacherId = teacherId;
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 

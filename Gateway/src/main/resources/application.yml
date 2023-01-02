@@ -31,6 +31,14 @@ spring:
           uri: lb://admin
           predicates:
             - Path=/admin/**
+        - id: report
+          uri: lb://report
+          predicates:
+            - Path=/report/**
+        - id: resource
+          uri: lb://resource
+          predicates:
+            - Path=/resource/**
   main:
     web-application-type: reactive
 

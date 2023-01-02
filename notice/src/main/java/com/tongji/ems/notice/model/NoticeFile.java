@@ -11,14 +11,25 @@ public class NoticeFile {
     private Long noticeId;
     private String noticeType;
 
+    private String storePath;
+
     public NoticeFile() {
     }
 
-    public NoticeFile(Integer fileId, String fileName, Long noticeId, String noticeType) {
+    public NoticeFile(Integer fileId, String fileName, Long noticeId, String noticeType, String storePath) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.noticeId = noticeId;
         this.noticeType = noticeType;
+        this.storePath = storePath;
+    }
+
+    public String getStorePath() {
+        return storePath;
+    }
+
+    public void setStorePath(String storePath) {
+        this.storePath = storePath;
     }
 
     public Integer getFileId() {

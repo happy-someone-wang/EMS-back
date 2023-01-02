@@ -9,5 +9,11 @@ public interface AdminService {
 
     public Map<String, Object> addUsers(List<User> Users);
 
+    public Map<String,Object> checkUsers(User user);
+
+    public Map<String,Object> updateUser(User user);
+
+    public Map<String,Object> checkNotice();
+
 
 }
