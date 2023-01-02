@@ -57,9 +57,21 @@ public class ResourceServiceImpl implements ResourceService {
         try {
             resourceList = resourceMapper.selectList(queryWrapper);
             result.put("status","读取成功");
-            result.put("reportList",resourceList);
+            result.put("resourceList",resourceList);
         }catch (Exception e) {
             result.put("status","读取失败");
+        }
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> deleteResource(Long resourceId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            resourceMapper.deleteById(resourceId);
+            result.put("status","删除成功");
+        } catch (Exception e) {
+            result.put("status","删除失败");
         }
         return result;
     }
