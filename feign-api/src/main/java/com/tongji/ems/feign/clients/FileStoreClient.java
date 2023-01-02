@@ -16,7 +16,7 @@ public interface FileStoreClient {
      * @param file 要上传的文件
      * @return 访问文件的URL
      */
-    @PostMapping(value = "/file",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/file" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadFile(@RequestPart(value = "file") MultipartFile file);
 
     /**
