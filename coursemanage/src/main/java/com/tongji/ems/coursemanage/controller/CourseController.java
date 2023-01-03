@@ -123,13 +123,17 @@ public class CourseController {
             @RequestParam(value = "name") String name,
             @RequestParam(value = "credit") Float credit,
             @RequestParam(value = "startTime") String startTime,
-            @RequestParam(value = "endTime") String endTime
+            @RequestParam(value = "endTime") String endTime,
+            @RequestParam(value = "weekday") Integer weekday,
+            @RequestParam(value = "startCourse") Integer startCourse,
+            @RequestParam(value = "endCourse") Integer endCourse,
+            @RequestParam(value = "location") String location
     ) {
         try {
             Long courseId = GenerateIdTenth.get10UniqueId();
             Date startTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime);
             Date endTime_date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endTime);
-            Course course = new Course(courseId, name, credit, startTime_date, endTime_date);
+            Course course = new Course(courseId, name, credit, startTime_date, endTime_date,weekday,startCourse,endCourse,location);
             int result = courseService.addExperiment(course);
             if (result == 1) {
                 return ResponseEntity.ok("插入成功");
@@ -157,10 +161,14 @@ public class CourseController {
             @RequestParam(value = "name") String name,
             @RequestParam(value = "credit") String credit,
             @RequestParam(value = "startTime") String startTime,
-            @RequestParam(value = "endTime") String endTime
+            @RequestParam(value = "endTime") String endTime,
+            @RequestParam(value = "weekday") String weekday,
+            @RequestParam(value = "startCourse") String startCourse,
+            @RequestParam(value = "endCourse") String endCourse,
+            @RequestParam(value = "location") String location
     ) {
         try {
-            int result = courseService.modifyExperiment(courseId, name, credit, startTime, endTime);
+            int result = courseService.modifyExperiment(courseId, name, credit, startTime, endTime,weekday,startCourse,endCourse,location);
             if (result == 1) {
                 return ResponseEntity.ok("修改成功");
             } else {

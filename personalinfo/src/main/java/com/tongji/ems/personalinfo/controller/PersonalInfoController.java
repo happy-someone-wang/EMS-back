@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f0dcce44ee6e74f8ff2477b6c64c604b78627656
 @RestController
 @RequestMapping("/person")
 public class PersonalInfoController {
@@ -60,7 +63,7 @@ public class PersonalInfoController {
 
     @PutMapping("/avatar")
     public ResponseEntity<String> updatePersonalAvatar(
-            @RequestPart("avatar") MultipartFile avatar,
+            @RequestParam("avatar") MultipartFile avatar,
             @RequestParam("id") String id,
             @RequestParam("role") String role
     ) {

@@ -25,7 +25,7 @@ public interface CourseService {
 
     int addExperiment(Course course);
 
-    int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime);
+    int modifyExperiment(Long courseId, String name, String credit, String startTime, String endTime,String weekday,String startCourse,String endCourse,String location);
 
     int removeExperiment(Long courseId);
 }

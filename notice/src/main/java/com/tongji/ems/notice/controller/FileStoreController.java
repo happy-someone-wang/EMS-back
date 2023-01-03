@@ -6,7 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f0dcce44ee6e74f8ff2477b6c64c604b78627656
 @RestController
 @RequestMapping("/file")
 public class FileStoreController {

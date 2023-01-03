@@ -25,15 +25,24 @@ public class Course {
     private List<String> teacher;
     private Integer level;
 
+    private Integer weekday;
+    private Integer startCourse;
+    private Integer endCourse;
+    private String location;
+
     public Course() {
     }
 
-    public Course(Long courseId, String name, Float credit, Date startTime, Date endTime) {
+    public Course(Long courseId, String name, Float credit, Date startTime, Date endTime, Integer weekday, Integer startCourse, Integer endCourse, String location) {
         this.courseId = courseId;
         this.name = name;
         this.credit = credit;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.weekday = weekday;
+        this.startCourse = startCourse;
+        this.endCourse = endCourse;
+        this.location = location;
     }
 
     public Long getCourseId() {
@@ -90,5 +99,37 @@ public class Course {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Integer getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(Integer weekday) {
+        this.weekday = weekday;
+    }
+
+    public Integer getStartCourse() {
+        return startCourse;
+    }
+
+    public void setStartCourse(Integer startCourse) {
+        this.startCourse = startCourse;
+    }
+
+    public Integer getEndCourse() {
+        return endCourse;
+    }
+
+    public void setEndCourse(Integer endCourse) {
+        this.endCourse = endCourse;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
