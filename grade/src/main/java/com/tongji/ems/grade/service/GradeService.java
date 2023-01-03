@@ -1,8 +1,6 @@
 package com.tongji.ems.grade.service;
 
-import com.tongji.ems.grade.model.CourseSign;
-import com.tongji.ems.grade.model.StudentReportGrade;
-import com.tongji.ems.grade.model.StudentSign;
+import com.tongji.ems.grade.model.*;
 
 import java.util.Map;
 
@@ -31,4 +29,10 @@ public interface GradeService {
     public Map<String, Object> getCourseAllStudentGrade(Long courseId);
 
     public Map<String, Object> getStudentAllCourseGrade(Long studentId);
+
+    public Map<String, Object> getCourseGradeProportion(Long courseId);
+
+    public Map<String, Object> postCourseGradeProportion(CourseSignScore courseSignScore);
+
+    public Map<String, Object> postCourseExperimentProportion(CourseExperimentScore courseExperimentScore);
 }
