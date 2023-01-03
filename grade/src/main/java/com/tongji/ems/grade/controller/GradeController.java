@@ -1,8 +1,6 @@
 package com.tongji.ems.grade.controller;
 
-import com.tongji.ems.grade.model.CourseSign;
-import com.tongji.ems.grade.model.StudentReportGrade;
-import com.tongji.ems.grade.model.StudentSign;
+import com.tongji.ems.grade.model.*;
 import com.tongji.ems.grade.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -107,4 +105,42 @@ public class GradeController {
             return ResponseEntity.status(400).body(null);
         }
     }
+
+    @GetMapping("/proportion")
+    public ResponseEntity<Map<String, Object>> getProportionOfCourse(
+            @RequestParam("courseId") String id
+    ) {
+        try {
+            Long courseId = Long.valueOf(id);
+            return ResponseEntity.ok(gradeService.getCourseGradeProportion(courseId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    @PostMapping("/proportion")
+    public ResponseEntity<Map<String, Object>> postProportionOfCourse(
+            @RequestBody CourseSignScore courseSignScore
+    ) {
+        try {
+            return ResponseEntity.ok(gradeService.postCourseGradeProportion(courseSignScore));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
+    @PostMapping("/proportion/experiment")
+    public ResponseEntity<Map<String, Object>> postProportionOfCourseExperiment(
+            @RequestBody CourseExperimentScore courseSignScore
+    ) {
+        try {
+            return ResponseEntity.ok(gradeService.postCourseExperimentProportion(courseSignScore));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(null);
+        }
+    }
+
 }

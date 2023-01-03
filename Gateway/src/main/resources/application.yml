@@ -18,7 +18,6 @@ spring:
               - DELETE
               - PUT
               - OPTION
-
       routes:
         - id: personalInfo
           uri: lb://personalInfo

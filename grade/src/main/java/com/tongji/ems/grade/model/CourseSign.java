@@ -1,5 +1,7 @@
 package com.tongji.ems.grade.model;
 
+
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -8,7 +10,7 @@ import java.util.Date;
 
 @TableName("course_sign")
 public class CourseSign {
-    @TableId("sign_id")
+    @TableId(value = "sign_id",type = IdType.AUTO)
     private Long signId;
     private Long courseId;
     private Date startTime;

@@ -278,4 +278,72 @@ public class GradeServiceImpl implements GradeService {
         result.put("courseGradeList", courseGradeList);
         return result;
     }
+
+    @Override
+    public Map<String, Object> getCourseGradeProportion(Long courseId) {
+        Map<String, Object> result = new HashMap<>();
+        CourseSignScore courseSignScore = courseSignScoreMapper.selectById(courseId);
+        if (courseSignScore == null) {
+            result.put("code", 400);
+            return result;
+        }
+        result.put("code", 200);
+        result.put("courseId", courseId);
+        result.put("experiment", courseSignScore.getExperiment());
+        result.put("sign", courseSignScore.getSign());
+        List<CourseExperimentScore> experimentScoreList = courseExperimentScoreMapper.selectList(
+                new QueryWrapper<CourseExperimentScore>()
+                        .eq("course_id", courseId));
+        if (experimentScoreList == null) {
+            result.put("code", 401);
+            return result;
+        }
+        List<Map<String, Object>> experimentScore = new ArrayList<>();
+        for (CourseExperimentScore score : experimentScoreList) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("experimentId", score.getExperimentId());
+            item.put("proportion", score.getProportion());
+            experimentScore.add(item);
+        }
+        result.put("experimentItem", experimentScore);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> postCourseGradeProportion(CourseSignScore courseSignScore) {
+        Map<String, Object> result = new HashMap<>();
+        CourseSignScore temp = courseSignScoreMapper.selectById(courseSignScore.getCourseId());
+        if (temp == null) {
+            courseSignScoreMapper.insert(courseSignScore);
+        } else {
+            courseSignScoreMapper.updateById(courseSignScore);
+        }
+        result.put("code", 200);
+        result.put("courseId", courseSignScore.getCourseId());
+        result.put("sign", courseSignScore.getSign());
+        result.put("experiment", courseSignScore.getExperiment());
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> postCourseExperimentProportion(CourseExperimentScore courseExperimentScore) {
+        Map<String, Object> result = new HashMap<>();
+        CourseExperimentScore temp = courseExperimentScoreMapper.selectOne(new QueryWrapper<CourseExperimentScore>()
+                .eq("course_id", courseExperimentScore.getCourseId())
+                .eq("experiment_id", courseExperimentScore.getExperimentId()));
+        if (temp == null) {
+            courseExperimentScoreMapper.insert(courseExperimentScore);
+        } else {
+            courseExperimentScoreMapper.update(courseExperimentScore, new QueryWrapper<CourseExperimentScore>()
+                    .eq("course_id", courseExperimentScore.getCourseId())
+                    .eq("experiment_id", courseExperimentScore.getExperimentId()));
+        }
+        result.put("code", 200);
+        result.put("courseId", courseExperimentScore.getCourseId());
+        result.put("experimentId", courseExperimentScore.getExperimentId());
+        result.put("proportion", courseExperimentScore.getProportion());
+        return result;
+    }
+
+
 }
