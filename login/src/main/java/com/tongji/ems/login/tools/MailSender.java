@@ -39,7 +39,7 @@ public class MailSender {
         // 通过session得到transport对象
         Transport ts = session.getTransport();
         // 连接邮件服务器：邮箱类型，帐号，授权码代替密码（更安全）
-        ts.connect("smtp.qq.com", "3155002905", "llpzrmzyexlxddef");
+        ts.connect("smtp.qq.com", "3155002905", "junyuxuudpoadfbe");
         // 创建邮件
         Message message;
         if (Objects.equals(type, "verify")) {
@@ -81,7 +81,7 @@ public class MailSender {
         String str = userId + "/" + password + "/" + role + "/" + email + "/" + System.currentTimeMillis();
         String code = encoder.encodeToString(str.getBytes());
 
-        message.setContent("尊敬的" + userId + "您好！\n" + "请点击下方链接验证您的邮箱:\n" + "        http://localhost:8081/login/verifyEmail?code=" + code, "text/html;charset=UTF-8");
+        message.setContent("尊敬的" + userId + "您好！\n" + "请点击下方链接验证您的邮箱:\n" + "        http://123.60.156.14:7999/login/verifyEmail?code=" + code, "text/html;charset=UTF-8");
         // 返回创建好的邮件对象
         return message;
     }
